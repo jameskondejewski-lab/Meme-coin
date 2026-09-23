@@ -1,0 +1,16 @@
+[
+  {
+    "url": "https://dexscreener.com/solana/FixtureFrog111111111111111111111111111111111",
+    "chainId": "solana",
+    "tokenAddress": "FixtureFrog111111111111111111111111111111111",
+    "amount": 100,
+    "totalAmount": 500
+  },
+  {
+    "url": "https://dexscreener.com/ethereum/0xfixture",
+    "chainId": "ethereum",
+    "tokenAddress": "0xfixture",
+    "amount": 50,
+    "totalAmount": 50
+  }
+]

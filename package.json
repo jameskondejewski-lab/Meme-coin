@@ -1,0 +1,16 @@
+{
+  "name": "solana-launch-intel",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Solana token research, security review and market-intelligence toolkit.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "snapshot": "node src/cli/snapshot.js",
+    "snapshot:fixtures": "node src/cli/snapshot.js --fixtures",
+    "test": "node --test \"test/**/*.test.js\""
+  },
+  "license": "MIT"
+}

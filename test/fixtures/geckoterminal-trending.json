@@ -1,0 +1,262 @@
+{
+  "data": [
+    {
+      "id": "solana_FixturePoo1Dog111111111111111111111111111111",
+      "type": "pool",
+      "attributes": {
+        "name": "FIXDOG / SOL",
+        "address": "FixturePoo1Dog111111111111111111111111111111",
+        "base_token_price_usd": "0.001",
+        "fdv_usd": "1020000",
+        "market_cap_usd": null,
+        "reserve_in_usd": "50000",
+        "pool_created_at": "2026-01-01T00:00:00Z",
+        "price_change_percentage": {
+          "m5": "0.1",
+          "h1": "1.0",
+          "h6": "2.0",
+          "h24": "5.0"
+        },
+        "transactions": {
+          "m5": {
+            "buys": 1,
+            "sells": 1,
+            "buyers": 1,
+            "sellers": 1
+          },
+          "h1": {
+            "buys": 10,
+            "sells": 10,
+            "buyers": 5,
+            "sellers": 5
+          },
+          "h6": {
+            "buys": 100,
+            "sells": 100,
+            "buyers": 50,
+            "sellers": 50
+          },
+          "h24": {
+            "buys": 900,
+            "sells": 700,
+            "buyers": 400,
+            "sellers": 300
+          }
+        },
+        "volume_usd": {
+          "m5": "100",
+          "h1": "1000",
+          "h6": "10000",
+          "h24": "300000"
+        }
+      },
+      "relationships": {
+        "base_token": {
+          "data": {
+            "id": "solana_FixtureDog1111111111111111111111111111111111",
+            "type": "token"
+          }
+        },
+        "quote_token": {
+          "data": {
+            "id": "solana_So11111111111111111111111111111111111111112",
+            "type": "token"
+          }
+        },
+        "dex": {
+          "data": {
+            "id": "raydium",
+            "type": "dex"
+          }
+        }
+      }
+    },
+    {
+      "id": "solana_FixturePoo1Cat111111111111111111111111111111",
+      "type": "pool",
+      "attributes": {
+        "name": "FIXCAT / SOL",
+        "address": "FixturePoo1Cat111111111111111111111111111111",
+        "base_token_price_usd": "0.001",
+        "fdv_usd": "2000000",
+        "market_cap_usd": null,
+        "reserve_in_usd": "20000",
+        "pool_created_at": "2026-01-09T18:00:00Z",
+        "price_change_percentage": {
+          "m5": "0.1",
+          "h1": "1.0",
+          "h6": "2.0",
+          "h24": "5.0"
+        },
+        "transactions": {
+          "m5": {
+            "buys": 1,
+            "sells": 1,
+            "buyers": 1,
+            "sellers": 1
+          },
+          "h1": {
+            "buys": 10,
+            "sells": 10,
+            "buyers": 5,
+            "sellers": 5
+          },
+          "h6": {
+            "buys": 100,
+            "sells": 100,
+            "buyers": 50,
+            "sellers": 50
+          },
+          "h24": {
+            "buys": 1000,
+            "sells": 2000,
+            "buyers": 40,
+            "sellers": 30
+          }
+        },
+        "volume_usd": {
+          "m5": "100",
+          "h1": "1000",
+          "h6": "10000",
+          "h24": "1000000"
+        }
+      },
+      "relationships": {
+        "base_token": {
+          "data": {
+            "id": "solana_FixtureCat1111111111111111111111111111111111",
+            "type": "token"
+          }
+        },
+        "quote_token": {
+          "data": {
+            "id": "solana_So11111111111111111111111111111111111111112",
+            "type": "token"
+          }
+        },
+        "dex": {
+          "data": {
+            "id": "raydium",
+            "type": "dex"
+          }
+        }
+      }
+    },
+    {
+      "id": "solana_FixturePoo1Frog11111111111111111111111111111",
+      "type": "pool",
+      "attributes": {
+        "name": "FIXFROG / SOL",
+        "address": "FixturePoo1Frog11111111111111111111111111111",
+        "base_token_price_usd": "0.001",
+        "fdv_usd": "800000",
+        "market_cap_usd": null,
+        "reserve_in_usd": "80000",
+        "pool_created_at": "2025-12-01T00:00:00Z",
+        "price_change_percentage": {
+          "m5": "0.1",
+          "h1": "1.0",
+          "h6": "2.0",
+          "h24": "5.0"
+        },
+        "transactions": {
+          "m5": {
+            "buys": 1,
+            "sells": 1,
+            "buyers": 1,
+            "sellers": 1
+          },
+          "h1": {
+            "buys": 10,
+            "sells": 10,
+            "buyers": 5,
+            "sellers": 5
+          },
+          "h6": {
+            "buys": 100,
+            "sells": 100,
+            "buyers": 50,
+            "sellers": 50
+          },
+          "h24": {
+            "buys": 500,
+            "sells": 400,
+            "buyers": 300,
+            "sellers": 250
+          }
+        },
+        "volume_usd": {
+          "m5": "100",
+          "h1": "1000",
+          "h6": "10000",
+          "h24": "200000"
+        }
+      },
+      "relationships": {
+        "base_token": {
+          "data": {
+            "id": "solana_FixtureFrog111111111111111111111111111111111",
+            "type": "token"
+          }
+        },
+        "quote_token": {
+          "data": {
+            "id": "solana_So11111111111111111111111111111111111111112",
+            "type": "token"
+          }
+        },
+        "dex": {
+          "data": {
+            "id": "raydium",
+            "type": "dex"
+          }
+        }
+      }
+    }
+  ],
+  "included": [
+    {
+      "id": "solana_FixtureDog1111111111111111111111111111111111",
+      "type": "token",
+      "attributes": {
+        "address": "FixtureDog1111111111111111111111111111111111",
+        "name": "Fixture Dog",
+        "symbol": "FIXDOG"
+      }
+    },
+    {
+      "id": "solana_FixtureCat1111111111111111111111111111111111",
+      "type": "token",
+      "attributes": {
+        "address": "FixtureCat1111111111111111111111111111111111",
+        "name": "Fixture Cat",
+        "symbol": "FIXCAT"
+      }
+    },
+    {
+      "id": "solana_FixtureFrog111111111111111111111111111111111",
+      "type": "token",
+      "attributes": {
+        "address": "FixtureFrog111111111111111111111111111111111",
+        "name": "Fixture Frog",
+        "symbol": "FIXFROG"
+      }
+    },
+    {
+      "id": "solana_So11111111111111111111111111111111111111112",
+      "type": "token",
+      "attributes": {
+        "address": "So11111111111111111111111111111111111111112",
+        "name": "Wrapped SOL",
+        "symbol": "SOL"
+      }
+    },
+    {
+      "id": "raydium",
+      "type": "dex",
+      "attributes": {
+        "name": "Raydium"
+      }
+    }
+  ]
+}

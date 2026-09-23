@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Ethereum",
+    "totalCirculatingUSD": {
+      "peggedUSD": 150000000000.0
+    }
+  },
+  {
+    "name": "Solana",
+    "totalCirculatingUSD": {
+      "peggedUSD": 10000000000.0
+    }
+  }
+]

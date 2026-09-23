@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Ethereum",
+    "tvl": 60000000000.0,
+    "tokenSymbol": "ETH"
+  },
+  {
+    "name": "Solana",
+    "tvl": 10000000000.0,
+    "tokenSymbol": "SOL"
+  }
+]

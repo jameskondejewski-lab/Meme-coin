@@ -1,0 +1,164 @@
+[
+  {
+    "chainId": "solana",
+    "dexId": "raydium",
+    "url": "https://dexscreener.com/solana/FixturePairSo1Usdt11111111111111111111111111",
+    "pairAddress": "FixturePairSo1Usdt11111111111111111111111111",
+    "baseToken": {
+      "address": "So11111111111111111111111111111111111111112",
+      "name": "SOL",
+      "symbol": "SOL"
+    },
+    "quoteToken": {
+      "address": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+      "name": "USDT",
+      "symbol": "USDT"
+    },
+    "priceNative": "0",
+    "priceUsd": "100.40",
+    "txns": {
+      "m5": {
+        "buys": 1,
+        "sells": 1
+      },
+      "h1": {
+        "buys": 10,
+        "sells": 10
+      },
+      "h6": {
+        "buys": 100,
+        "sells": 100
+      },
+      "h24": {
+        "buys": 5000,
+        "sells": 5000
+      }
+    },
+    "volume": {
+      "m5": 100,
+      "h1": 1000,
+      "h6": 10000,
+      "h24": 5000000.0
+    },
+    "priceChange": {
+      "m5": 0,
+      "h1": 0.1,
+      "h6": 0.5,
+      "h24": 1.0
+    },
+    "liquidity": {
+      "usd": 1000000.0,
+      "base": 0,
+      "quote": 0
+    },
+    "pairCreatedAt": 1700000000000
+  },
+  {
+    "chainId": "solana",
+    "dexId": "raydium",
+    "url": "https://dexscreener.com/solana/FixturePairSo1Usdc11111111111111111111111111",
+    "pairAddress": "FixturePairSo1Usdc11111111111111111111111111",
+    "baseToken": {
+      "address": "So11111111111111111111111111111111111111112",
+      "name": "SOL",
+      "symbol": "SOL"
+    },
+    "quoteToken": {
+      "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "name": "USDC",
+      "symbol": "USDC"
+    },
+    "priceNative": "0",
+    "priceUsd": "100.50",
+    "txns": {
+      "m5": {
+        "buys": 1,
+        "sells": 1
+      },
+      "h1": {
+        "buys": 10,
+        "sells": 10
+      },
+      "h6": {
+        "buys": 100,
+        "sells": 100
+      },
+      "h24": {
+        "buys": 50000,
+        "sells": 48000
+      }
+    },
+    "volume": {
+      "m5": 100,
+      "h1": 1000,
+      "h6": 10000,
+      "h24": 50000000.0
+    },
+    "priceChange": {
+      "m5": 0,
+      "h1": 0.1,
+      "h6": 0.5,
+      "h24": 1.0
+    },
+    "liquidity": {
+      "usd": 10000000.0,
+      "base": 0,
+      "quote": 0
+    },
+    "pairCreatedAt": 1700000000000
+  },
+  {
+    "chainId": "solana",
+    "dexId": "raydium",
+    "url": "https://dexscreener.com/solana/FixturePairDogSo111111111111111111111111111",
+    "pairAddress": "FixturePairDogSo111111111111111111111111111",
+    "baseToken": {
+      "address": "FixtureDog1111111111111111111111111111111111",
+      "name": "FIXDOG",
+      "symbol": "FIXDOG"
+    },
+    "quoteToken": {
+      "address": "So11111111111111111111111111111111111111112",
+      "name": "SOL",
+      "symbol": "SOL"
+    },
+    "priceNative": "0",
+    "priceUsd": "0.00102",
+    "txns": {
+      "m5": {
+        "buys": 1,
+        "sells": 1
+      },
+      "h1": {
+        "buys": 10,
+        "sells": 10
+      },
+      "h6": {
+        "buys": 100,
+        "sells": 100
+      },
+      "h24": {
+        "buys": 900,
+        "sells": 700
+      }
+    },
+    "volume": {
+      "m5": 100,
+      "h1": 1000,
+      "h6": 10000,
+      "h24": 300000
+    },
+    "priceChange": {
+      "m5": 0,
+      "h1": 0.1,
+      "h6": 0.5,
+      "h24": 1.0
+    },
+    "liquidity": {
+      "usd": 50000,
+      "base": 0,
+      "quote": 0
+    },
+    "pairCreatedAt": 1767225600000
+  }
+]

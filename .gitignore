@@ -1,0 +1,8 @@
+node_modules/
+data/snapshots/
+.env
+*.log
+.DS_Store
+# Never commit keypairs
+*.keypair.json
+id.json

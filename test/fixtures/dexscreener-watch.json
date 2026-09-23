@@ -1,0 +1,114 @@
+[
+  {
+    "chainId": "solana",
+    "dexId": "raydium",
+    "url": "https://dexscreener.com/solana/FixturePairDogSo111111111111111111111111111",
+    "pairAddress": "FixturePairDogSo111111111111111111111111111",
+    "baseToken": {
+      "address": "FixtureDog1111111111111111111111111111111111",
+      "name": "FIXDOG",
+      "symbol": "FIXDOG"
+    },
+    "quoteToken": {
+      "address": "So11111111111111111111111111111111111111112",
+      "name": "SOL",
+      "symbol": "SOL"
+    },
+    "priceNative": "0",
+    "priceUsd": "0.00102",
+    "txns": {
+      "m5": {
+        "buys": 1,
+        "sells": 1
+      },
+      "h1": {
+        "buys": 10,
+        "sells": 10
+      },
+      "h6": {
+        "buys": 100,
+        "sells": 100
+      },
+      "h24": {
+        "buys": 900,
+        "sells": 700
+      }
+    },
+    "volume": {
+      "m5": 100,
+      "h1": 1000,
+      "h6": 10000,
+      "h24": 300000
+    },
+    "priceChange": {
+      "m5": 0,
+      "h1": 0.1,
+      "h6": 0.5,
+      "h24": 1.0
+    },
+    "liquidity": {
+      "usd": 50000,
+      "base": 0,
+      "quote": 0
+    },
+    "pairCreatedAt": 1767225600000,
+    "fdv": 1020000,
+    "marketCap": 1020000
+  },
+  {
+    "chainId": "solana",
+    "dexId": "raydium",
+    "url": "https://dexscreener.com/solana/FixturePairDogUsdc1111111111111111111111111",
+    "pairAddress": "FixturePairDogUsdc1111111111111111111111111",
+    "baseToken": {
+      "address": "FixtureDog1111111111111111111111111111111111",
+      "name": "FIXDOG",
+      "symbol": "FIXDOG"
+    },
+    "quoteToken": {
+      "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "name": "USDC",
+      "symbol": "USDC"
+    },
+    "priceNative": "0",
+    "priceUsd": "0.00101",
+    "txns": {
+      "m5": {
+        "buys": 1,
+        "sells": 1
+      },
+      "h1": {
+        "buys": 10,
+        "sells": 10
+      },
+      "h6": {
+        "buys": 100,
+        "sells": 100
+      },
+      "h24": {
+        "buys": 90,
+        "sells": 70
+      }
+    },
+    "volume": {
+      "m5": 100,
+      "h1": 1000,
+      "h6": 10000,
+      "h24": 20000
+    },
+    "priceChange": {
+      "m5": 0,
+      "h1": 0.1,
+      "h6": 0.5,
+      "h24": 1.0
+    },
+    "liquidity": {
+      "usd": 5000,
+      "base": 0,
+      "quote": 0
+    },
+    "pairCreatedAt": 1767225600000,
+    "fdv": 1010000,
+    "marketCap": 1010000
+  }
+]
