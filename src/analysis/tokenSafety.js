@@ -45,6 +45,10 @@ function assessExtension(ext) {
       return s.closeAuthority ? { severity: 'medium', message: `Mint can be closed by ${s.closeAuthority}.` } : null;
     case 'confidentialTransferMint':
       return { severity: 'medium', message: 'Confidential transfers enabled: balances and flows may be hidden from analysis.' };
+    case 'metadataPointer':
+      return s.authority
+        ? { severity: 'medium', message: `Metadata pointer can be redirected to other metadata by ${s.authority}.` }
+        : null;
     case 'tokenMetadata':
       return s.updateAuthority
         ? { severity: 'medium', message: `Metadata (name/symbol/image) can still be changed by ${s.updateAuthority}.` }

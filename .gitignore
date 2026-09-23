@@ -6,3 +6,5 @@ data/snapshots/
 # Never commit keypairs
 *.keypair.json
 id.json
+# Local-validator deployments vanish with the ledger
+deployments/localnet/

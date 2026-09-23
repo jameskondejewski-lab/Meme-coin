@@ -16,8 +16,10 @@ Research → Trend detection → Concept → Token creation (devnet first) → S
 | Stack and API due diligence | [docs/research/2026-09-23-tech-due-diligence.md](docs/research/2026-09-23-tech-due-diligence.md) |
 | Market snapshot CLI (multi-source, cross-checked) | ✅ `npm run snapshot` |
 | Static token safety review (authorities, Token-2022 extensions, concentration) | ✅ in snapshot `--mint` |
+| Token launcher (Token-2022, atomic, verified on-chain) | ✅ `npm run launch` — see [docs/launch-runbook.md](docs/launch-runbook.md) |
+| Adversarial post-launch check | ✅ `scripts/adversarial-check.sh` |
+| First test coin (LITEST) | ✅ localnet, 15/15 checks + 6/6 attacks rejected; devnet blocked by faucet limits |
 | Token concepts | next |
-| SPL token scripts (devnet) | planned |
 | Alerting and history | planned |
 | Social sentiment engine | planned (needs a paid data feed) |
 | Dashboard UI | planned |
@@ -68,11 +70,30 @@ Copy `.env.example`. All values are optional:
 
 The process exits with code 2 if every source fails, so a scheduler notices a dead pipeline.
 
+## Token launcher
+
+```bash
+npm run launch -- --spec tokens/devnet-test.json --cluster localnet --airdrop   # needs solana-test-validator
+npm run launch -- --spec tokens/devnet-test.json --dry-run                      # devnet: build + simulate only
+npm run launch -- --spec tokens/devnet-test.json                                # devnet launch (fund the payer first)
+```
+
+The launcher builds one atomic Token-2022 transaction:
+- create the mint, with no freeze authority;
+- store the metadata on the mint;
+- mint the full supply;
+- revoke the mint authority;
+- lock the metadata.
+
+It simulates the transaction, sends it, confirms it, re-reads the mint from chain, runs 15 checks and the safety scanner, and writes a deployment record. Mainnet needs `--keypair` and `--confirm-mainnet <SYMBOL>` plus the runbook's approval gate.
+
 ## Security posture
 
-- Zero runtime dependencies.
+- Three runtime dependencies (`@solana/kit` 8.3.0, `@solana-program/token-2022` 0.18.0, `@solana-program/system` 0.14.1).
+  - Pinned exactly, each released at least 7 days before adoption.
+  - All 53 installed packages have verified npm registry signatures, and none has install scripts.
 - `.npmrc` sets `ignore-scripts=true` and `save-exact=true`, because 2025–26 npm worms (Shai-Hulud, ChainDrop) spread through install scripts.
-- No private keys are ever read by this code. Keypair files are git-ignored.
+- Keys live outside the repo (`~/.config/solana-launch-intel/`, mode 0600). The launcher refuses keypair paths inside the repo and never generates mainnet keys.
 - **Nothing here deploys to mainnet.** Token scripts will be devnet-first, with explicit, separate mainnet steps after review.
 
 ## Layout
@@ -83,6 +104,11 @@ src/sources/    coingecko, dexscreener, geckoterminal, jupiter, defillama, solan
 src/analysis/   crossCheck, tokenSafety, trending
 src/snapshot.js orchestrates sources → snapshot JSON with provenance
 src/report.js   terminal report
+src/token/      spec validation, atomic launch plan, keys, on-chain verification
+src/cli/        snapshot.js, launch.js
+tokens/         reviewed token specs
+scripts/        adversarial-check.sh
+deployments/    launch records (public data only)
 test/           node:test suites + SYNTHETIC fixtures
 docs/research/  dated research reports
 ```

@@ -1,0 +1,8 @@
+{
+  "name": "Launch Intel Devnet Test",
+  "symbol": "LITEST",
+  "uri": "",
+  "decimals": 6,
+  "supply": "1000000000",
+  "immutableMetadata": true
+}

@@ -155,3 +155,12 @@ test('coverage reports which checks ran', () => {
   assert.equal(r.partial, true);
   assert.deepEqual(r.missingChecks, ['concentration', 'insiders']);
 });
+
+test('a metadata pointer that still has an authority is flagged', () => {
+  const r = assessTokenSafety({
+    ...base,
+    programId: TOKEN_2022_PROGRAM_ID,
+    extensions: [{ extension: 'metadataPointer', state: { authority: 'Ptr1', metadataAddress: 'x' } }],
+  });
+  assert.deepEqual(ids(r), ['ext:metadataPointer']);
+});
