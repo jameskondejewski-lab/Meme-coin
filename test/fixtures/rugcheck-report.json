@@ -1,0 +1,70 @@
+{
+  "mint": "FixtureDog1111111111111111111111111111111111",
+  "tokenProgram": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+  "token": {
+    "mintAuthority": null,
+    "freezeAuthority": null,
+    "supply": 1000000000000000,
+    "decimals": 6
+  },
+  "risks": [
+    {
+      "name": "Mutable metadata",
+      "value": "",
+      "description": "Token metadata can be changed by the owner",
+      "score": 100,
+      "level": "warn"
+    }
+  ],
+  "score": 101,
+  "score_normalised": 7,
+  "totalHolders": 1234,
+  "totalMarketLiquidity": 55000,
+  "graphInsidersDetected": 0,
+  "insiderNetworks": null,
+  "knownAccounts": {
+    "FixtureVau1tOwner11111111111111111111111111": {
+      "name": "Raydium AMM",
+      "type": "AMM"
+    }
+  },
+  "topHolders": [
+    {
+      "address": "FixturePoo1Vau1t111111111111111111111111111",
+      "owner": "FixtureVau1tOwner11111111111111111111111111",
+      "pct": 20.0,
+      "insider": false
+    },
+    {
+      "address": "FixtureHo1derA11111111111111111111111111111",
+      "owner": "FixtureOwnerA11111111111111111111111111111",
+      "pct": 5.0,
+      "insider": false
+    },
+    {
+      "address": "FixtureHo1derB11111111111111111111111111111",
+      "owner": "FixtureOwnerB11111111111111111111111111111",
+      "pct": 1.0,
+      "insider": false
+    },
+    {
+      "address": "FixtureHo1derC11111111111111111111111111111",
+      "owner": "FixtureOwnerC11111111111111111111111111111",
+      "pct": 1.0,
+      "insider": false
+    }
+  ],
+  "markets": [
+    {
+      "marketType": "raydium",
+      "pubkey": "FixturePairDogSo111111111111111111111111111",
+      "lp": {
+        "baseUSD": 25000,
+        "quoteUSD": 25000,
+        "lpLockedPct": 100
+      }
+    }
+  ],
+  "launchpad": null,
+  "rugged": false
+}

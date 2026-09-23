@@ -3,9 +3,10 @@ import { fetchJson, num } from '../lib/http.js';
 const SOURCE = 'solana-rpc';
 let nextId = 1;
 
-export async function rpc(ctx, method, params = []) {
+export async function rpc(ctx, method, params = [], { retries } = {}) {
   const res = await fetchJson(SOURCE, ctx.config.solanaRpcUrl, {
     fetchImpl: ctx.fetchImpl,
+    retries,
     method: 'POST',
     body: { jsonrpc: '2.0', id: nextId++, method, params },
   });
@@ -46,6 +47,8 @@ export async function getMintInfo(ctx, mint) {
  * until known addresses are excluded.
  */
 export async function getLargestTokenAccounts(ctx, mint) {
-  const result = await rpc(ctx, 'getTokenLargestAccounts', [mint, { commitment: 'confirmed' }]);
+  // The public endpoint rejects this method outright; don't burn retries on it.
+  const isPublic = /api\.mainnet-beta\.solana\.com/.test(ctx.config.solanaRpcUrl);
+  const result = await rpc(ctx, 'getTokenLargestAccounts', [mint, { commitment: 'confirmed' }], { retries: isPublic ? 0 : undefined });
   return (result?.value ?? []).map((a) => ({ address: a.address, amountRaw: a.amount }));
 }

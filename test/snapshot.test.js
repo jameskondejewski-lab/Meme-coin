@@ -35,15 +35,39 @@ test('trending pools carry indicator flags, including paid promotion', async () 
   assert.deepEqual(bySym.FIXFROG, ['paid-promotion']);
 });
 
-test('watchlist token gets market data from its deepest pair and a safety review', async () => {
+test('watchlist token: deepest pool, summed liquidity from both methods, safety with RugCheck', async () => {
   const { snap } = await snapshotWith();
   const [w] = snap.watchlist;
   assert.equal(w.symbol, 'FIXDOG');
   assert.equal(w.market.liquidityUsd, 50000);
-  // Top-1 of 20% is the pool vault; without --exclude it is a downgraded upper-bound flag.
-  assert.equal(w.safety.verdict, 'caution');
-  assert.equal(w.safety.concentration.top10Pct, 27);
+  assert.deepEqual(w.liquidity, { dexscreenerPoolsUsd: 55000, dexscreenerPoolCount: 2, dexscreenerCapped: false, jupiterAggregateUsd: 60000 });
+  // RugCheck labels the 20% pool vault as AMM, so concentration excludes it.
+  assert.equal(w.safety.concentration.source, 'rugcheck');
+  assert.equal(w.safety.concentration.top1Pct, 5);
+  assert.equal(w.safety.concentration.top10Pct, 7);
+  assert.equal(w.safety.partial, false);
+  assert.equal(w.safety.verdict, 'caution'); // RugCheck "Mutable metadata" warn
+  assert.deepEqual(w.safety.findings.map((f) => f.id), ['rugcheck:mutable-metadata']);
+  assert.equal(w.safety.rugcheck.scoreNormalised, 7);
+});
+
+test('without RugCheck, concentration falls back to RPC and is labelled an upper bound', async () => {
+  const { snap } = await snapshotWith(['rugcheck-report.json']);
+  const [w] = snap.watchlist;
+  assert.equal(w.safety.concentration.source, 'rpc');
   assert.equal(w.safety.concentration.top1Pct, 20);
+  assert.match(w.safety.findings.find((f) => f.id === 'top1-concentration').message, /upper bound/);
+  assert.equal(w.safety.rugcheck.unavailable, true);
+  assert.deepEqual(w.safety.missingChecks, ['insiders']);
+  assert.equal(w.safety.partial, true);
+});
+
+test('with neither holder source, the verdict is explicitly partial', async () => {
+  const { snap } = await snapshotWith(['rugcheck-report.json', 'rpc-getTokenLargestAccounts.json']);
+  const [w] = snap.watchlist;
+  assert.equal(w.safety.concentration, null);
+  assert.deepEqual(w.safety.missingChecks, ['concentration', 'insiders']);
+  assert.match(renderReport(snap), /PARTIAL, not checked: concentration, insiders/);
 });
 
 test('failed sources are marked unavailable with a reason — no placeholder values', async () => {

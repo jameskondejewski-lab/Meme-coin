@@ -95,3 +95,63 @@ test('concentration is an upper bound until pool vaults are excluded', () => {
   assert.equal(adj.findings.find((f) => f.id === 'top1-concentration').severity, 'high');
   assert.equal(adj.verdict, 'red-flags');
 });
+
+const rc = (over = {}) => ({
+  risks: [],
+  mintAuthority: null,
+  freezeAuthority: null,
+  top1Pct: 4,
+  top10Pct: 20,
+  excludedPoolOrLockerAccounts: 1,
+  insiderHoldersInTop: 0,
+  graphInsidersDetected: 0,
+  ...over,
+});
+
+test('RugCheck disagreeing with RPC about authorities is a high finding', () => {
+  const r = assessTokenSafety(base, [], { rugcheck: rc({ mintAuthority: 'SomeAuth' }) });
+  assert.ok(ids(r).includes('source-disagreement'));
+  assert.equal(r.verdict, 'red-flags');
+});
+
+test('RugCheck risks map to severities; authority risks are not duplicated', () => {
+  const r = assessTokenSafety(base, [], {
+    rugcheck: rc({
+      risks: [
+        { name: 'Mint Authority still enabled', level: 'danger' },
+        { name: 'Low Liquidity', level: 'danger' },
+        { name: 'Mutable metadata', level: 'warn' },
+      ],
+    }),
+  });
+  assert.deepEqual(ids(r), ['rugcheck:low-liquidity', 'rugcheck:mutable-metadata']);
+  assert.equal(r.findings[0].severity, 'high');
+});
+
+test('insiders among top holders are flagged; graph-only insiders are informational', () => {
+  assert.equal(assessTokenSafety(base, [], { rugcheck: rc({ insiderHoldersInTop: 2 }) }).findings[0].id, 'insider-holders');
+  const graphOnly = assessTokenSafety(base, [], { rugcheck: rc({ graphInsidersDetected: 12 }) });
+  assert.equal(graphOnly.findings[0].severity, 'info');
+  assert.equal(graphOnly.verdict, 'no-flags-detected');
+});
+
+test('Token-2022 metadata with an update authority is flagged as mutable', () => {
+  const r = assessTokenSafety({
+    ...base,
+    programId: TOKEN_2022_PROGRAM_ID,
+    extensions: [{ extension: 'tokenMetadata', state: { updateAuthority: 'Upd1', name: 'X', symbol: 'X', uri: '' } }],
+  });
+  assert.deepEqual(ids(r), ['ext:tokenMetadata']);
+  const immutable = assessTokenSafety({
+    ...base,
+    programId: TOKEN_2022_PROGRAM_ID,
+    extensions: [{ extension: 'tokenMetadata', state: { updateAuthority: null } }],
+  });
+  assert.deepEqual(ids(immutable), []);
+});
+
+test('coverage reports which checks ran', () => {
+  const r = assessTokenSafety(base);
+  assert.equal(r.partial, true);
+  assert.deepEqual(r.missingChecks, ['concentration', 'insiders']);
+});

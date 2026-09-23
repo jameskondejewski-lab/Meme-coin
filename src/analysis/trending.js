@@ -3,7 +3,8 @@
 
 export const DEFAULT_THRESHOLDS = {
   newPoolHours: 24,
-  thinLiquidityRatio: 0.03, // liquidity / FDV
+  thinLiquidityRatio: 0.03, // pool liquidity / FDV ...
+  thinLiquidityMaxUsd: 5_000_000, // ... only while the pool is also shallow in absolute terms
   sellPressureRatio: 1.5, // sells / buys over 24h
   highTurnoverRatio: 20, // 24h volume / liquidity
   fewTradersMin: 150, // unique buyers+sellers over 24h ...
@@ -24,7 +25,7 @@ export function assessPool(pool, { now = new Date(), paidBoostMints = new Set(),
 
   const flags = [];
   if (ageHours !== null && ageHours < t.newPoolHours) flags.push({ id: 'new-pool', message: `Pool is ${round(ageHours, 1)}h old.` });
-  if (liqToFdv !== null && liqToFdv < t.thinLiquidityRatio) {
+  if (liqToFdv !== null && liqToFdv < t.thinLiquidityRatio && pool.liquidityUsd < t.thinLiquidityMaxUsd) {
     flags.push({ id: 'thin-liquidity', message: `Liquidity is ${round(liqToFdv * 100)}% of FDV; price is easy to move.` });
   }
   if (sellBuy !== null && sellBuy > t.sellPressureRatio) {

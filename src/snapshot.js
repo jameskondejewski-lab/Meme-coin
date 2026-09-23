@@ -5,6 +5,7 @@ import * as geckoterminal from './sources/geckoterminal.js';
 import * as jupiter from './sources/jupiter.js';
 import * as defillama from './sources/defillama.js';
 import * as solanaRpc from './sources/solanaRpc.js';
+import * as rugcheck from './sources/rugcheck.js';
 import { getFearGreed } from './sources/fearGreed.js';
 import { crossCheck } from './analysis/crossCheck.js';
 import { assessTrending } from './analysis/trending.js';
@@ -33,16 +34,50 @@ async function reviewMint(ctx, mint, excludeAddresses) {
   const mintInfo = await settle(ctx, () => solanaRpc.getMintInfo(ctx, mint));
   if (!mintInfo.ok) return { unavailable: true, source: 'solana-rpc', reason: mintInfo.error };
   if (!mintInfo.data) return { unavailable: true, source: 'solana-rpc', reason: 'solana-rpc: mint account not found' };
-  const largest = await settle(ctx, () => solanaRpc.getLargestTokenAccounts(ctx, mint));
-  const safety = assessTokenSafety(mintInfo.data, largest.ok ? largest.data : [], { excludeAddresses });
+  // Public RPC refuses getTokenLargestAccounts; RugCheck's pool-aware holder list covers it.
+  const [largest, rc] = await Promise.all([
+    settle(ctx, () => solanaRpc.getLargestTokenAccounts(ctx, mint)),
+    settle(ctx, () => rugcheck.getReport(ctx, mint)),
+  ]);
+  const safety = assessTokenSafety(mintInfo.data, largest.ok ? largest.data : [], {
+    excludeAddresses,
+    rugcheck: rc.ok ? rc.data : null,
+  });
   return {
     ...safety,
     decimals: mintInfo.data.decimals,
     supplyRaw: mintInfo.data.supplyRaw,
     slot: mintInfo.data.slot,
-    concentrationUnavailableReason: largest.ok ? null : largest.error,
+    rugcheck: rc.ok
+      ? {
+        scoreNormalised: rc.data.scoreNormalised,
+        totalHolders: rc.data.totalHolders,
+        deepestMarket: rc.data.deepestMarket,
+        launchpad: rc.data.launchpad,
+        rugged: rc.data.rugged,
+      }
+      : { unavailable: true, source: 'rugcheck', reason: rc.error },
+    // Only report a failed source as missing data when nothing else covered it.
+    unavailableReasons: [
+      ...(rc.ok ? [] : [rc.error]),
+      ...(largest.ok || safety.coverage.concentration === 'rugcheck' ? [] : [largest.error]),
+    ],
     source: 'solana-rpc',
     fetchedAt: mintInfo.fetchedAt,
+  };
+}
+
+/**
+ * Total liquidity from two methods that are expected to differ: DexScreener's
+ * sum over the listed pools (max 30) and Jupiter's routable aggregate. Both are
+ * reported; neither is averaged.
+ */
+function crossCheckLiquidity(summary, jup) {
+  return {
+    dexscreenerPoolsUsd: summary ? Math.round(summary.totalLiquidityUsd) : null,
+    dexscreenerPoolCount: summary?.poolCount ?? null,
+    dexscreenerCapped: summary?.poolCountCapped ?? null,
+    jupiterAggregateUsd: jup?.liquidityUsd !== undefined && jup?.liquidityUsd !== null ? Math.round(jup.liquidityUsd) : null,
   };
 }
 
@@ -67,7 +102,6 @@ export async function buildSnapshot(ctx, { watchMints = [], excludeAddresses = [
     'defillama.stablecoins': () => defillama.getSolanaStablecoinSupply(ctx),
     'alternative.fearGreed': () => getFearGreed(ctx),
   };
-  if (watchMints.length) tasks['dexscreener.watch'] = () => dexscreener.getTokenPairs(ctx, watchMints);
 
   const names = Object.keys(tasks);
   const settled = await Promise.all(names.map((n) => settle(ctx, tasks[n])));
@@ -87,10 +121,11 @@ export async function buildSnapshot(ctx, { watchMints = [], excludeAddresses = [
   const paidBoostMints = new Set(boosts.ok ? boosts.data.map((b) => b.tokenAddress) : []);
   const trending = r['geckoterminal.trending'];
 
-  const watchPairs = r['dexscreener.watch']?.ok ? r['dexscreener.watch'].data : [];
   const watchlist = [];
   for (const mint of watchMints) {
-    const pair = dexscreener.deepestPairFor(watchPairs, mint);
+    const pools = await settle(ctx, () => dexscreener.getAllPools(ctx, mint));
+    const summary = pools.ok ? dexscreener.summarizePools(pools.data, mint) : null;
+    const pair = summary?.deepest ?? null;
     watchlist.push({
       mint,
       symbol: pair?.baseSymbol ?? null,
@@ -98,9 +133,10 @@ export async function buildSnapshot(ctx, { watchMints = [], excludeAddresses = [
         { source: 'jupiter', value: jupPrices[mint]?.priceUsd },
         { source: 'dexscreener', value: pair?.priceUsd },
       ]),
+      liquidity: crossCheckLiquidity(summary, jupPrices[mint]),
       market: pair
-        ? { ...pair, fetchedAt: r['dexscreener.watch'].fetchedAt }
-        : { unavailable: true, source: 'dexscreener', reason: r['dexscreener.watch']?.error ?? 'dexscreener: no Solana pair found' },
+        ? { ...pair, poolCount: summary.poolCount, poolCountCapped: summary.poolCountCapped, fetchedAt: pools.fetchedAt }
+        : { unavailable: true, source: 'dexscreener', reason: pools.ok ? 'dexscreener: no Solana pair found' : pools.error },
       // Sequential per mint: public RPC throttles getTokenLargestAccounts hard.
       safety: await reviewMint(ctx, mint, excludeAddresses),
     });

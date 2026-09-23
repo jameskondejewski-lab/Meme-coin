@@ -87,12 +87,21 @@ export function renderReport(s) {
     for (const w of s.watchlist) {
       out.push(`  ${w.symbol ?? '?'} ${w.mint}`);
       out.push(crossCheckLine('  price', w.price));
-      out.push(line('  market', w.market, (m) => `liq ${usd(m.liquidityUsd)}, mcap ${usd(m.marketCapUsd)}, vol24 ${usd(m.volumeUsd.h24)}, 24h buys/sells ${m.txns.h24.buys ?? 'n/a'}/${m.txns.h24.sells ?? 'n/a'}`));
+      out.push(line('  top pool', w.market, (m) => `liq ${usd(m.liquidityUsd)} (${m.dexId}), mcap ${usd(m.marketCapUsd)}, vol24 ${usd(m.volumeUsd.h24)}, 24h buys/sells ${m.txns.h24.buys ?? 'n/a'}/${m.txns.h24.sells ?? 'n/a'}`));
+      const l = w.liquidity;
+      out.push(`    ${'total liquidity'.padEnd(20)} dexscreener ${usd(l.dexscreenerPoolsUsd)} over ${l.dexscreenerPoolCount ?? '?'} pools${l.dexscreenerCapped ? ' (capped at 30: lower bound)' : ''}; jupiter aggregate ${usd(l.jupiterAggregateUsd)}`);
       if (w.safety.unavailable) out.push(`    safety: ${unavailable(w.safety)}`);
       else {
-        out.push(`    safety: ${w.safety.verdict.toUpperCase()} (${w.safety.program}) — ${w.safety.note}`);
+        const partial = w.safety.partial ? ` — PARTIAL, not checked: ${w.safety.missingChecks.join(', ')}` : '';
+        out.push(`    safety: ${w.safety.verdict.toUpperCase()} (${w.safety.program})${partial}`);
+        out.push(`      ${w.safety.note}`);
+        if (!w.safety.rugcheck.unavailable) {
+          const rc = w.safety.rugcheck;
+          out.push(`      rugcheck: risk score ${rc.scoreNormalised}/100 (lower is better), holders ${rc.totalHolders ?? 'n/a'}${rc.launchpad ? `, launchpad ${rc.launchpad}` : ''}${rc.deepestMarket ? `, deepest LP locked ${rc.deepestMarket.lpLockedPct ?? 'n/a'}%` : ''}`);
+        }
+        if (w.safety.concentration) out.push(`      concentration (${w.safety.concentration.source}): top1 ${w.safety.concentration.top1Pct}%, top10 ${w.safety.concentration.top10Pct}%`);
         for (const f of w.safety.findings) out.push(`      [${f.severity}] ${f.message}`);
-        if (w.safety.concentrationUnavailableReason) out.push(`      concentration: ${UNAVAILABLE} (${w.safety.concentrationUnavailableReason})`);
+        for (const reason of w.safety.unavailableReasons) out.push(`      ${UNAVAILABLE} (${reason})`);
       }
     }
   }

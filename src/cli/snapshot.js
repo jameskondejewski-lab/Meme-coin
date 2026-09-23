@@ -6,6 +6,7 @@ import { createContext, isValidAddress } from '../lib/context.js';
 import { createFixtureFetch, FIXTURE_NOW } from '../lib/fixtureFetch.js';
 import { buildSnapshot } from '../snapshot.js';
 import { renderReport } from '../report.js';
+import { reexecWithEnvProxyIfNeeded } from '../lib/proxy.js';
 
 const USAGE = `Usage: npm run snapshot -- [options]
 
@@ -34,6 +35,8 @@ if (values.help) {
   console.log(USAGE);
   process.exit(0);
 }
+
+if (!values.fixtures) reexecWithEnvProxyIfNeeded();
 
 const invalid = [...values.mint, ...values.exclude].filter((a) => !isValidAddress(a));
 if (invalid.length) {

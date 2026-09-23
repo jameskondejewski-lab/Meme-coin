@@ -12,7 +12,13 @@ export async function getPrices(ctx, mints) {
     const raw = await fetchJson(SOURCE, `${jupiterApiBase}/price/v3?ids=${ids}`, { fetchImpl: ctx.fetchImpl, headers });
     for (const [mint, row] of Object.entries(raw ?? {})) {
       if (!row) continue; // Jupiter omits or nulls mints it cannot price reliably
-      out[mint] = { priceUsd: num(row.usdPrice), change24hPct: num(row.priceChange24h), blockId: num(row.blockId) };
+      out[mint] = {
+        priceUsd: num(row.usdPrice),
+        change24hPct: num(row.priceChange24h),
+        liquidityUsd: num(row.liquidity), // Jupiter's aggregate across routable venues
+        createdAt: row.createdAt ?? null,
+        blockId: num(row.blockId),
+      };
     }
   }
   return out;

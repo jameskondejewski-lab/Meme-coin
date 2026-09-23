@@ -44,6 +44,28 @@ export async function getTokenPairs(ctx, mints) {
   return pairs;
 }
 
+/**
+ * Every pool for one token (max 30). Unlike /tokens/v1, which returns only the
+ * top pool per token, this is what total on-chain liquidity must be summed from.
+ */
+export async function getAllPools(ctx, mint) {
+  const raw = await fetchJson(SOURCE, `${BASE}/token-pairs/v1/solana/${mint}`, { fetchImpl: ctx.fetchImpl });
+  return (Array.isArray(raw) ? raw : []).filter((p) => p.chainId === 'solana').map(normalizePair);
+}
+
+/** Liquidity summary for `mint` across its pools (lower bound: API caps at 30 pools). */
+export function summarizePools(pools, mint) {
+  const own = pools.filter((p) => p.baseAddress === mint || p.quoteAddress === mint);
+  const deepest = deepestPairFor(own, mint);
+  return {
+    poolCount: own.length,
+    poolCountCapped: pools.length >= 30,
+    totalLiquidityUsd: own.reduce((sum, p) => sum + (p.liquidityUsd ?? 0), 0),
+    volume24hUsd: own.reduce((sum, p) => sum + (p.volumeUsd.h24 ?? 0), 0),
+    deepest,
+  };
+}
+
 /** Deepest-liquidity pair where `mint` is the base token. */
 export function deepestPairFor(pairs, mint) {
   return pairs

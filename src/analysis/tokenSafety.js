@@ -45,6 +45,10 @@ function assessExtension(ext) {
       return s.closeAuthority ? { severity: 'medium', message: `Mint can be closed by ${s.closeAuthority}.` } : null;
     case 'confidentialTransferMint':
       return { severity: 'medium', message: 'Confidential transfers enabled: balances and flows may be hidden from analysis.' };
+    case 'tokenMetadata':
+      return s.updateAuthority
+        ? { severity: 'medium', message: `Metadata (name/symbol/image) can still be changed by ${s.updateAuthority}.` }
+        : null;
     case 'interestBearingConfig':
     case 'scaledUiAmountConfig':
       return { severity: 'medium', message: `${ext.extension}: displayed balances can be changed by an authority.` };
@@ -66,9 +70,11 @@ function pctOf(amountRaw, supplyRaw) {
  *
  * @param {Awaited<ReturnType<import('../sources/solanaRpc.js').getMintInfo>>} mintInfo
  * @param {{address: string, amountRaw: string}[]} [largestAccounts]
- * @param {{excludeAddresses?: string[]}} [opts]  known pool vaults / lockers / burn accounts
+ * @param {{excludeAddresses?: string[], rugcheck?: Awaited<ReturnType<import('../sources/rugcheck.js').getReport>>|null}} [opts]
+ *   excludeAddresses: known pool vaults / lockers / burn accounts.
+ *   rugcheck: third-party report used as a cross-check and for pool-aware concentration.
  */
-export function assessTokenSafety(mintInfo, largestAccounts = [], { excludeAddresses = [] } = {}) {
+export function assessTokenSafety(mintInfo, largestAccounts = [], { excludeAddresses = [], rugcheck = null } = {}) {
   const findings = [];
   const add = (id, severity, message) => findings.push({ id, severity, message });
 
@@ -90,8 +96,45 @@ export function assessTokenSafety(mintInfo, largestAccounts = [], { excludeAddre
     if (r) add(`ext:${ext.extension}`, r.severity, r.message);
   }
 
+  const coverage = { authorities: 'rpc', extensions: 'rpc', concentration: null, insiders: null, thirdParty: null };
+
+  if (rugcheck) {
+    coverage.thirdParty = 'rugcheck';
+    const same = (a, b) => (a || null) === (b || null);
+    if (!same(rugcheck.mintAuthority, mintInfo.mintAuthority) || !same(rugcheck.freezeAuthority, mintInfo.freezeAuthority)) {
+      add('source-disagreement', 'high', 'RugCheck and on-chain RPC disagree about mint/freeze authority; re-check before trusting either.');
+    }
+    for (const risk of rugcheck.risks) {
+      if (/mint authority|freeze authority/i.test(risk.name)) continue; // covered by our own RPC read
+      const severity = risk.level === 'danger' ? 'high' : risk.level === 'warn' ? 'medium' : 'info';
+      add(`rugcheck:${risk.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`, severity, `RugCheck: ${risk.name}${risk.description ? ` — ${risk.description}` : ''}`);
+    }
+    if (rugcheck.graphInsidersDetected !== null) {
+      coverage.insiders = 'rugcheck';
+      if (rugcheck.insiderHoldersInTop > 0) {
+        add('insider-holders', 'medium', `RugCheck marks ${rugcheck.insiderHoldersInTop} of the top holders as insiders.`);
+      } else if (rugcheck.graphInsidersDetected > 0) {
+        add('insider-network', 'info', `RugCheck's transfer graph links ${rugcheck.graphInsidersDetected} wallets as insiders (indicator only).`);
+      }
+    }
+  }
+
   let concentration = null;
-  if (largestAccounts.length && mintInfo.supplyRaw && BigInt(mintInfo.supplyRaw) > 0n) {
+  if (rugcheck && rugcheck.top10Pct !== null && rugcheck.top1Pct !== null) {
+    // Preferred: RugCheck labels AMM/locker accounts, so its numbers exclude pools.
+    concentration = {
+      top1Pct: rugcheck.top1Pct,
+      top10Pct: rugcheck.top10Pct,
+      excludedCount: rugcheck.excludedPoolOrLockerAccounts,
+      adjusted: true,
+      source: 'rugcheck',
+    };
+    coverage.concentration = 'rugcheck';
+    const who = 'Top 10 holders (pools/lockers excluded; exchange wallets may be included)';
+    if (concentration.top10Pct > 50) add('top10-concentration', 'high', `${who} own ${concentration.top10Pct}% of supply.`);
+    else if (concentration.top10Pct > 30) add('top10-concentration', 'medium', `${who} own ${concentration.top10Pct}% of supply.`);
+    if (concentration.top1Pct > 10) add('top1-concentration', 'high', `Largest holder (pools/lockers excluded) owns ${concentration.top1Pct}% of supply.`);
+  } else if (largestAccounts.length && mintInfo.supplyRaw && BigInt(mintInfo.supplyRaw) > 0n) {
     const excluded = new Set(excludeAddresses);
     const counted = largestAccounts.filter((a) => !excluded.has(a.address));
     const top1Pct = counted.length ? pctOf(counted[0].amountRaw, mintInfo.supplyRaw) : 0;
@@ -100,7 +143,8 @@ export function assessTokenSafety(mintInfo, largestAccounts = [], { excludeAddre
       mintInfo.supplyRaw,
     );
     const adjusted = excluded.size > 0;
-    concentration = { top1Pct, top10Pct, excludedCount: largestAccounts.length - counted.length, adjusted };
+    concentration = { top1Pct, top10Pct, excludedCount: largestAccounts.length - counted.length, adjusted, source: 'rpc' };
+    coverage.concentration = 'rpc';
 
     const caveat = adjusted ? '' : ' (upper bound: pool vaults and lockers not excluded)';
     const sev = (s) => (adjusted ? s : downgrade(s));
@@ -113,12 +157,16 @@ export function assessTokenSafety(mintInfo, largestAccounts = [], { excludeAddre
   const worst = findings[0]?.severity;
   const verdict = worst === 'critical' || worst === 'high' ? 'red-flags' : worst === 'medium' ? 'caution' : 'no-flags-detected';
 
+  const missing = Object.entries(coverage).filter(([k, v]) => v === null && k !== 'thirdParty').map(([k]) => k);
   return {
     mint: mintInfo.mint,
     program,
     verdict,
+    partial: missing.length > 0,
+    missingChecks: missing,
+    coverage,
     findings,
     concentration,
-    note: 'Static on-chain checks only. Absence of flags is not proof of safety.',
+    note: 'Static checks only. Absence of flags is not proof of safety.',
   };
 }

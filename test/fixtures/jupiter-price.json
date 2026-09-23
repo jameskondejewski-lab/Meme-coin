@@ -3,12 +3,14 @@
     "usdPrice": 101.0,
     "priceChange24h": 1.2,
     "blockId": 1000,
-    "decimals": 9
+    "decimals": 9,
+    "liquidity": 900000000.0
   },
   "FixtureDog1111111111111111111111111111111111": {
     "usdPrice": 0.001,
     "priceChange24h": -3.1,
     "blockId": 1000,
-    "decimals": 6
+    "decimals": 6,
+    "liquidity": 60000.0
   }
 }

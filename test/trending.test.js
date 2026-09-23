@@ -41,3 +41,10 @@ test('missing fields produce no flags rather than false alarms', () => {
   assert.deepEqual(flagIds(r), []);
   assert.equal(r.metrics.liquidityToFdv, null);
 });
+
+test('thin-liquidity ignores pools that are deep in absolute terms', () => {
+  const deep = assessPool(pool({ liquidityUsd: 21_800_000, fdvUsd: 3_320_000_000 }), { now });
+  assert.ok(!flagIds(deep).includes('thin-liquidity'));
+  const shallow = assessPool(pool({ liquidityUsd: 2_500_000, fdvUsd: 1_600_000_000 }), { now });
+  assert.ok(flagIds(shallow).includes('thin-liquidity'));
+});
