@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000"><defs>
+  <radialGradient id="sunny" cx="0.42" cy="0.4" r="0.85"><stop offset="0" stop-color="#FFE68A"/><stop offset="1" stop-color="#FFB10F"/></radialGradient>
+  <linearGradient id="night" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B3354"/><stop offset="1" stop-color="#1B2038"/></linearGradient>
+</defs><rect width="1000" height="1000" fill="url(#sunny)"/><rect x="500" width="500" height="1000" fill="url(#night)"/><rect x="-20" y="760" width="1040" height="40" fill="#C9803F" stroke="#16182B" stroke-width="12"/><rect x="-20" y="800" width="1040" height="400" fill="#8A4B24" stroke="#16182B" stroke-width="12"/><g transform="translate(180 760) rotate(0) scale(1.0)">
+  <path d="M132 -115 C198 -118 204 -24 132 -24" fill="none" stroke="#16182B" stroke-width="42" stroke-linecap="round"/>
+  <path d="M132 -115 C198 -118 204 -24 132 -24" fill="none" stroke="#E63946" stroke-width="20" stroke-linecap="round"/>
+  <rect x="0" y="-150" width="132" height="150" rx="14" fill="#E63946" stroke="#16182B" stroke-width="12"/>
+  <ellipse cx="66" cy="-150" rx="58" ry="12" fill="#6F3B1A" stroke="#16182B" stroke-width="8"/>
+  <rect x="18" y="-122" width="22" height="100" rx="11" fill="#FF8C95"/>
+</g><g transform="translate(680 760) rotate(0) scale(1.0)">
+  <path d="M132 -115 C198 -118 204 -24 132 -24" fill="none" stroke="#16182B" stroke-width="42" stroke-linecap="round"/>
+  <path d="M132 -115 C198 -118 204 -24 132 -24" fill="none" stroke="#E63946" stroke-width="20" stroke-linecap="round"/>
+  <rect x="0" y="-150" width="132" height="150" rx="14" fill="#E63946" stroke="#16182B" stroke-width="12"/>
+  <ellipse cx="66" cy="-150" rx="58" ry="12" fill="#6F3B1A" stroke="#16182B" stroke-width="8"/>
+  <rect x="18" y="-122" width="22" height="100" rx="11" fill="#FF8C95"/>
+</g><g transform="translate(750 610)">
+  <circle r="170" fill="none" stroke="#E63946" stroke-width="14"/>
+  <circle r="95" fill="none" stroke="#E63946" stroke-width="10"/>
+  <path d="M0 -215 V-120 M0 120 V215 M-215 0 H-120 M120 0 H215" stroke="#E63946" stroke-width="14" stroke-linecap="round"/>
+</g><line x1="500" y1="0" x2="500" y2="760" stroke="#16182B" stroke-width="12"/><text x="250" y="150" font-family="Impact, 'Arial Black', 'DejaVu Sans', sans-serif" font-size="54" font-weight="900" fill="#16182B" text-anchor="middle" stroke="#16182B" stroke-width="0" stroke-linejoin="round" paint-order="stroke">WHAT YOU SEE</text><text x="750" y="120" font-family="Impact, 'Arial Black', 'DejaVu Sans', sans-serif" font-size="54" font-weight="900" fill="#fff" text-anchor="middle" stroke="#16182B" stroke-width="12" stroke-linejoin="round" paint-order="stroke">WHAT THE</text><text x="750" y="185" font-family="Impact, 'Arial Black', 'DejaVu Sans', sans-serif" font-size="54" font-weight="900" fill="#fff" text-anchor="middle" stroke="#16182B" stroke-width="12" stroke-linejoin="round" paint-order="stroke">CAT SEES</text><text x="250" y="890" font-family="Impact, 'Arial Black', 'DejaVu Sans', sans-serif" font-size="56" font-weight="900" fill="#fff" text-anchor="middle" stroke="#16182B" stroke-width="12" stroke-linejoin="round" paint-order="stroke">a coffee</text><text x="750" y="890" font-family="Impact, 'Arial Black', 'DejaVu Sans', sans-serif" font-size="66" font-weight="900" fill="#fff" text-anchor="middle" stroke="#16182B" stroke-width="14" stroke-linejoin="round" paint-order="stroke">A MISSION</text></svg>
