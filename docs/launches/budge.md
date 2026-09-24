@@ -17,7 +17,7 @@
 
 > A basset hound asleep on the dev's bag. He has not moved. He will not move.
 
-The dev buy is small (0.25 SOL, about 0.9% of supply). The joke is that the dog is lying on it. The honesty *is* the meme.
+The dev buy is small (0.5 SOL, about 1.7% of supply). The joke is that the dog is lying on it. The honesty *is* the meme.
 
 ## pump.fun form
 
@@ -32,7 +32,7 @@ The dev buy is small (0.25 SOL, about 0.9% of supply). The joke is that the dog 
 | Pool liquidity pair | SOL (standard; 47 of the 50 newest coins use it) |
 | Share creator rewards | off |
 | Mayhem mode | **OFF**. pump.fun says it "may increase coin supply", which would break the fixed-supply claim. |
-| Initial buy (dev buy) | **0.25 SOL** in the create step. It is the first buy, so no one front-runs it. |
+| Initial buy (dev buy) | **0.5 SOL** in the create step. It is the first buy, so no one front-runs it. |
 
 ### Description, version A (if you will lock the dev bag)
 
@@ -40,7 +40,7 @@ The dev buy is small (0.25 SOL, about 0.9% of supply). The joke is that the dog 
 He has not moved. He will not move.
 
 A basset hound asleep on the dev bag.
-Dev bought 0.25 SOL at launch (~0.9% of supply), one wallet.
+Dev bought 0.5 SOL at launch (~1.7% of supply), one wallet.
 No presale. No team tokens. No bundles.
 Dev bag gets locked on Jupiter Lock right after launch. Receipt on X.
 
@@ -53,7 +53,7 @@ Just a meme. No roadmap. No promises. Don't budge.
 He has not moved. He will not move.
 
 A basset hound asleep on the dev bag.
-Dev bought 0.25 SOL at launch (~0.9% of supply), one wallet.
+Dev bought 0.5 SOL at launch (~1.7% of supply), one wallet.
 No presale. No team tokens. No bundles.
 
 Just a meme. No roadmap. No promises. Don't budge.
@@ -61,11 +61,12 @@ Just a meme. No roadmap. No promises. Don't budge.
 
 pump.fun metadata **cannot be edited after launch**, so only claim what you will actually do.
 
-## What 0.25 SOL buys (verified from pump.fun's live API, 2026-09-24)
+## What 0.5 SOL buys (verified from pump.fun's live API, 2026-09-24)
 
 - 59 of the 91 newest SOL-quoted coins use the standard curve: 30 SOL virtual reserves and 1.073B virtual tokens.
-- On that curve, 0.25 SOL buys about **8.8M BUDGE, around 0.88% of supply**. The exact figure depends on the fee tier at launch.
-- Holdings under 1% don't trip the usual "whale dev" warnings on RugCheck, Bubblemaps or DexScreener, as long as it's one wallet.
+- On that curve, 0.5 SOL buys about **17.4M BUDGE, around 1.74% of supply** (1.76% before fees). The exact figure depends on the fee tier at launch.
+- For comparison, 0.25 SOL would have bought about 0.88%.
+- One wallet under 2% doesn't trip the usual "whale dev" warnings. Disclosure matters more than size.
 
 ## Who signs: your wallet (recommended)
 
@@ -73,9 +74,9 @@ Create the coin yourself at pump.fun with **your own wallet** (Phantom, Solflare
 
 - **You are the creator on-chain,** so creator fees go to you directly.
 - **No private key ever leaves your wallet.** The alternative is a hot key inside a temporary cloud container, which disappears when the session ends.
-- **It takes about 2 minutes:** connect wallet → "create coin" → fill in the form above → set initial buy to 0.25 → confirm.
+- **It takes about 2 minutes:** connect wallet → "create coin" → fill in the form above → set initial buy to 0.5 → confirm.
 
-**Budget:** 0.25 SOL for the dev buy, plus about 0.02–0.05 SOL for creation and network fees. Keep roughly 0.35 SOL in the wallet.
+**Budget:** 0.5 SOL for the dev buy, plus about 0.02–0.05 SOL for creation and network fees. Keep roughly 0.6 SOL in the wallet.
 
 ## Before you click "Create"
 
@@ -83,10 +84,10 @@ Create the coin yourself at pump.fun with **your own wallet** (Phantom, Solflare
 - [ ] Logo downloaded from `assets/budge/budge-draft.png` (or the final version).
 - [ ] Mayhem mode is OFF and creator rewards go to Creator.
 - [ ] Description chosen (A only if you will really lock).
-- [ ] Wallet holds about 0.35 SOL and is on **mainnet**.
-- [ ] Initial buy is set to **0.25 SOL**.
+- [ ] Wallet holds about 0.6 SOL and is on **mainnet**.
+- [ ] Initial buy is set to **0.5 SOL**.
 - [ ] One wallet only: no buys from other wallets you control in the first blocks. That is "bundling", and scanners flag it.
-- [ ] You accept the downside. Most pump.fun coins never graduate; in June only about 0.26% did. Treat the 0.25 SOL as spent.
+- [ ] You accept the downside. Most pump.fun coins never graduate; in June only about 0.26% did. Treat the 0.5 SOL as spent.
 
 ## Right after launch
 
@@ -101,7 +102,7 @@ Create the coin yourself at pump.fun with **your own wallet** (Phantom, Solflare
 
 ## Risks, stated plainly
 
-- Meme coins are speculative. Most go to zero. The 0.25 SOL may be lost.
+- Meme coins are speculative. Most go to zero. The 0.5 SOL may be lost.
 - Snipers and bots buy in the first seconds of almost every pump.fun launch. We don't control that, and it isn't a sign of anything we did.
 - **Name confusion:** anyone can launch another "BUDGE" afterwards. Always share the exact contract address.
 - **Legal:** this is a meme with no utility, no promises and no yield. That is deliberate. This sheet is not legal or financial advice.
