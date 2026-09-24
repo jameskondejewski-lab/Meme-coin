@@ -1,57 +1,137 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#16213a"/>
-      <stop offset="1" stop-color="#0c1222"/>
+    <radialGradient id="bg" cx="0.33" cy="0.4" r="0.85">
+      <stop offset="0" stop-color="#ff8a3d"/>
+      <stop offset="0.55" stop-color="#e2352a"/>
+      <stop offset="1" stop-color="#7c0f14"/>
+    </radialGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0f1c33"/>
+      <stop offset="1" stop-color="#08101f"/>
+    </linearGradient>
+    <linearGradient id="fur" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5a3521"/>
+      <stop offset="1" stop-color="#3b2216"/>
+    </linearGradient>
+    <linearGradient id="face" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e8b584"/>
+      <stop offset="1" stop-color="#c98d5c"/>
+    </linearGradient>
+    <linearGradient id="desk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6e4029"/>
+      <stop offset="1" stop-color="#3f2416"/>
     </linearGradient>
   </defs>
+
   <rect width="1000" height="1000" fill="url(#bg)"/>
-  <!-- faint grid -->
-  <g stroke="#243252" stroke-width="3">
-    <line x1="0" y1="250" x2="1000" y2="250"/><line x1="0" y1="500" x2="1000" y2="500"/><line x1="0" y1="750" x2="1000" y2="750"/>
-    <line x1="250" y1="0" x2="250" y2="1000"/><line x1="500" y1="0" x2="500" y2="1000"/><line x1="750" y1="0" x2="750" y2="1000"/>
+  <!-- rage burst behind the ape -->
+  <g stroke="#ffd2a1" stroke-width="10" stroke-linecap="round" opacity="0.35">
+    <line x1="270" y1="380" x2="40" y2="120"/><line x1="270" y1="380" x2="250" y2="20"/>
+    <line x1="270" y1="380" x2="20" y2="420"/><line x1="270" y1="380" x2="60" y2="640"/>
+    <line x1="270" y1="380" x2="440" y2="40"/>
   </g>
-  <!-- the chart: dips to the bottom, then rips -->
-  <polyline points="40,540 120,600 200,770 300,500 420,540 560,290 680,330 930,70"
-            fill="none" stroke="#27e36b" stroke-width="30" stroke-linejoin="round" stroke-linecap="round"/>
-  <polygon points="965,30 880,60 940,125" fill="#27e36b"/>
-  <!-- the exact bottom: red dot + SOLD tag -->
-  <circle cx="200" cy="770" r="28" fill="#ff3b4e" stroke="#0c1222" stroke-width="8"/>
-  <g transform="translate(60,830) rotate(-8)">
-    <rect x="0" y="0" width="170" height="70" rx="14" fill="#ff3b4e" stroke="#0c1222" stroke-width="8"/>
-    <text x="85" y="50" font-family="Arial Black, Arial, sans-serif" font-size="42" font-weight="900" fill="#fff" text-anchor="middle">SOLD</text>
+
+  <!-- MONITOR -->
+  <rect x="690" y="600" width="80" height="175" fill="#2a3142" stroke="#0b0e16" stroke-width="10"/>
+  <ellipse cx="730" cy="790" rx="130" ry="22" fill="#2a3142" stroke="#0b0e16" stroke-width="10"/>
+  <rect x="450" y="150" width="520" height="470" rx="30" fill="#1b2130" stroke="#0b0e16" stroke-width="12"/>
+  <rect x="482" y="182" width="456" height="406" rx="12" fill="url(#screen)"/>
+  <g stroke="#1b2c4a" stroke-width="3">
+    <line x1="482" y1="285" x2="938" y2="285"/><line x1="482" y1="385" x2="938" y2="385"/><line x1="482" y1="485" x2="938" y2="485"/>
+    <line x1="600" y1="182" x2="600" y2="588"/><line x1="720" y1="182" x2="720" y2="588"/><line x1="840" y1="182" x2="840" y2="588"/>
   </g>
-  <!-- ape -->
-  <g stroke="#1a120c" stroke-width="12" stroke-linejoin="round">
-    <!-- ears -->
-    <circle cx="370" cy="640" r="70" fill="#6b4226"/>
-    <circle cx="370" cy="640" r="34" fill="#e7b98b" stroke-width="0"/>
-    <circle cx="830" cy="640" r="70" fill="#6b4226"/>
-    <circle cx="830" cy="640" r="34" fill="#e7b98b" stroke-width="0"/>
-    <!-- head -->
-    <ellipse cx="600" cy="640" rx="235" ry="225" fill="#6b4226"/>
-    <!-- face mask -->
-    <path d="M600 520 C 520 470, 420 520, 440 610 C 450 660, 470 690, 470 720 C 470 820, 730 820, 730 720 C 730 690, 750 660, 760 610 C 780 520, 680 470, 600 520 Z" fill="#e7b98b"/>
-    <!-- brow -->
-    <path d="M455 560 Q 520 520 585 560" fill="none" stroke-width="14"/>
-    <path d="M615 560 Q 680 520 745 560" fill="none" stroke-width="14"/>
-    <!-- eyes: wide, looking up-right at the pump -->
-    <ellipse cx="530" cy="615" rx="52" ry="58" fill="#fff"/>
-    <ellipse cx="672" cy="615" rx="52" ry="58" fill="#fff"/>
-    <circle cx="552" cy="592" r="21" fill="#1a120c" stroke-width="0"/>
-    <circle cx="694" cy="592" r="21" fill="#1a120c" stroke-width="0"/>
-    <!-- nostrils + open despair mouth -->
-    <ellipse cx="582" cy="690" rx="10" ry="8" fill="#1a120c" stroke-width="0"/>
-    <ellipse cx="620" cy="690" rx="10" ry="8" fill="#1a120c" stroke-width="0"/>
-    <ellipse cx="601" cy="760" rx="46" ry="38" fill="#3a1410"/>
-    <!-- hand holding phone -->
-    <rect x="690" y="780" width="120" height="190" rx="18" fill="#222a3d"/>
-    <rect x="705" y="800" width="90" height="120" rx="8" fill="#ff3b4e" stroke-width="0"/>
-    <path d="M650 900 C 650 850, 720 840, 740 870 L 760 930 C 760 980, 650 990, 650 940 Z" fill="#6b4226"/>
+  <!-- the chart: dump to the bottom, then send it -->
+  <polyline points="500,300 560,375 620,545 680,430 735,470 800,300 852,330 912,222" fill="none" stroke="#2bff7a" stroke-width="34" stroke-linejoin="round" stroke-linecap="round" opacity="0.25"/>
+  <polyline points="500,300 560,375 620,545 680,430 735,470 800,300 852,330 912,222" fill="none" stroke="#2bff7a" stroke-width="15" stroke-linejoin="round" stroke-linecap="round"/>
+  <polygon points="932,184 894,205 934,228" fill="#2bff7a"/>
+  <!-- where he sold -->
+  <circle cx="620" cy="545" r="17" fill="#ff3346" stroke="#08101f" stroke-width="6"/>
+  <rect x="566" y="554" width="108" height="30" rx="7" fill="#ff3346"/>
+  <text x="620" y="579" font-family="Arial Black, Arial, sans-serif" font-size="27" font-weight="900" fill="#fff" text-anchor="middle">SOLD</text>
+  <!-- where it is now -->
+  <rect x="740" y="192" width="104" height="44" rx="8" fill="#2bff7a"/>
+  <text x="792" y="226" font-family="Arial Black, Arial, sans-serif" font-size="30" font-weight="900" fill="#052714" text-anchor="middle">NOW</text>
+
+  <!-- APE body (behind desk) -->
+  <ellipse cx="250" cy="790" rx="210" ry="240" fill="url(#fur)" stroke="#1a0f09" stroke-width="12"/>
+
+  <!-- arms: outline stroke, then fur stroke -->
+  <g fill="none" stroke-linecap="round">
+    <path d="M150 640 Q 220 720 320 745" stroke="#1a0f09" stroke-width="104"/>
+    <path d="M150 640 Q 220 720 320 745" stroke="#4a2c1c" stroke-width="80"/>
+    <path d="M370 610 Q 450 690 525 735" stroke="#1a0f09" stroke-width="104"/>
+    <path d="M370 610 Q 450 690 525 735" stroke="#4a2c1c" stroke-width="80"/>
   </g>
-  <!-- tears -->
-  <path d="M478 650 C 468 680, 462 700, 478 712 C 494 700, 488 680, 478 650 Z" fill="#5ecbff" stroke="#1a120c" stroke-width="6"/>
-  <path d="M726 650 C 716 680, 710 700, 726 712 C 742 700, 736 680, 726 650 Z" fill="#5ecbff" stroke="#1a120c" stroke-width="6"/>
-  <!-- down arrow on phone screen -->
-  <polygon points="750,900 730,870 742,870 742,828 758,828 758,870 770,870" fill="#fff"/>
+
+  <!-- DESK + KEYBOARD -->
+  <rect x="0" y="790" width="1000" height="210" fill="url(#desk)"/>
+  <rect x="0" y="790" width="1000" height="16" fill="#8a5334"/>
+  <path d="M240 805 L640 805 L618 752 L262 752 Z" fill="#2a2f3d" stroke="#0b0e16" stroke-width="8" stroke-linejoin="round"/>
+  <g fill="#cfd5e2">
+    <rect x="285" y="762" width="40" height="14" rx="3"/><rect x="335" y="762" width="40" height="14" rx="3"/>
+    <rect x="385" y="762" width="40" height="14" rx="3"/><rect x="435" y="762" width="40" height="14" rx="3"/>
+    <rect x="485" y="762" width="40" height="14" rx="3"/><rect x="535" y="762" width="40" height="14" rx="3"/>
+    <rect x="280" y="782" width="330" height="14" rx="3"/>
+  </g>
+  <!-- keys flying off -->
+  <g fill="#e9edf5" stroke="#0b0e16" stroke-width="5">
+    <rect x="-18" y="-18" width="36" height="36" rx="6" transform="translate(250 690) rotate(-25)"/>
+    <rect x="-16" y="-16" width="32" height="32" rx="6" transform="translate(600 680) rotate(30)"/>
+    <rect x="-14" y="-14" width="28" height="28" rx="5" transform="translate(430 655) rotate(12)"/>
+    <rect x="-12" y="-12" width="24" height="24" rx="5" transform="translate(660 730) rotate(-40)"/>
+  </g>
+
+  <!-- fists slamming -->
+  <g stroke="#1a0f09" stroke-width="10">
+    <circle cx="325" cy="745" r="58" fill="#5b3624"/>
+    <circle cx="528" cy="737" r="58" fill="#5b3624"/>
+  </g>
+  <g fill="none" stroke="#1a0f09" stroke-width="7" stroke-linecap="round">
+    <path d="M300 712 Q 318 722 336 712"/><path d="M305 740 Q 322 750 342 740"/>
+    <path d="M503 704 Q 521 714 539 704"/><path d="M508 732 Q 525 742 545 732"/>
+  </g>
+  <!-- impact marks -->
+  <g stroke="#fff4d6" stroke-width="9" stroke-linecap="round">
+    <line x1="245" y1="720" x2="215" y2="705"/><line x1="250" y1="760" x2="212" y2="765"/>
+    <line x1="598" y1="712" x2="630" y2="696"/><line x1="604" y1="752" x2="640" y2="756"/>
+  </g>
+
+  <!-- HEAD -->
+  <circle cx="105" cy="385" r="58" fill="url(#fur)" stroke="#1a0f09" stroke-width="10"/>
+  <circle cx="105" cy="385" r="28" fill="#c98d5c"/>
+  <circle cx="275" cy="380" r="178" fill="url(#fur)" stroke="#1a0f09" stroke-width="12"/>
+  <!-- face mask, turned toward the monitor -->
+  <path d="M255 285 C 305 250, 410 270, 418 332 C 426 382, 405 402, 410 432 C 426 530, 300 565, 228 522 C 176 490, 168 440, 184 398 C 196 360, 190 308, 255 285 Z" fill="url(#face)" stroke="#1a0f09" stroke-width="8"/>
+  <!-- furious brows -->
+  <path d="M208 316 L 292 350" stroke="#1a0f09" stroke-width="22" stroke-linecap="round"/>
+  <path d="M322 350 L 404 312" stroke="#1a0f09" stroke-width="22" stroke-linecap="round"/>
+  <!-- bloodshot eyes locked on the chart -->
+  <ellipse cx="258" cy="378" rx="31" ry="25" fill="#fff" stroke="#1a0f09" stroke-width="6"/>
+  <ellipse cx="360" cy="376" rx="31" ry="25" fill="#fff" stroke="#1a0f09" stroke-width="6"/>
+  <g stroke="#e0283a" stroke-width="3" fill="none">
+    <path d="M232 372 L 246 376 L 240 386"/><path d="M335 370 L 348 374 L 342 384"/>
+  </g>
+  <circle cx="274" cy="377" r="9" fill="#1a0f09"/>
+  <circle cx="376" cy="375" r="9" fill="#1a0f09"/>
+  <!-- nostrils -->
+  <ellipse cx="330" cy="428" rx="9" ry="7" fill="#1a0f09"/>
+  <ellipse cx="360" cy="428" rx="9" ry="7" fill="#1a0f09"/>
+  <!-- screaming mouth -->
+  <path d="M236 486 C 248 448, 290 438, 325 440 C 360 438, 402 448, 414 486 C 420 546, 380 578, 325 578 C 270 578, 230 546, 236 486 Z" fill="#3b0c0c" stroke="#1a0f09" stroke-width="8"/>
+  <path d="M254 476 C 284 454, 366 454, 396 476 L 389 492 C 360 478, 290 478, 261 492 Z" fill="#fff"/>
+  <ellipse cx="325" cy="548" rx="42" ry="14" fill="#e04a5a"/>
+  <path d="M280 560 C 305 569, 345 569, 370 560 L 363 547 C 340 553, 310 553, 287 547 Z" fill="#fff"/>
+  <!-- snarl creases: corners pulled down -->
+  <path d="M236 486 L 218 506" stroke="#1a0f09" stroke-width="7" stroke-linecap="round"/>
+  <path d="M414 486 L 432 506" stroke="#1a0f09" stroke-width="7" stroke-linecap="round"/>
+  <!-- popping vein -->
+  <g stroke="#ff3346" stroke-width="10" stroke-linecap="round" fill="none">
+    <path d="M168 262 Q 185 272 190 256"/><path d="M200 252 Q 190 268 206 276"/>
+    <path d="M196 288 Q 186 276 172 286"/>
+  </g>
+  <!-- steam -->
+  <g fill="#fff" opacity="0.85">
+    <circle cx="150" cy="190" r="26"/><circle cx="125" cy="160" r="20"/><circle cx="160" cy="140" r="16"/>
+    <circle cx="410" cy="200" r="24"/><circle cx="440" cy="170" r="18"/><circle cx="420" cy="140" r="13"/>
+  </g>
 </svg>
