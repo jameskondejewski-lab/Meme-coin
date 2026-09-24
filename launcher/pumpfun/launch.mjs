@@ -48,7 +48,7 @@ if ((process.env.HTTPS_PROXY || process.env.https_proxy) && !process.env.NODE_US
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = resolve(HERE, '../..');
 const OWNER_CREATOR = '6gVxrgeFt2iS5UgH4VWX3cCH6mtofJdrMeRDdNhJ1wn5'; // owner's wallet: receives creator fees
-const MAX_BUY_SOL = 0.3;
+const MAX_BUY_SOL = 0.5; // owner-approved budget for $ISOLD (was 0.3)
 const KEYDIR = join(homedir(), '.config/solana-launch-intel');
 // One wallet per coin: --wallet <name> uses wallets/<name>.json; default is the funding wallet.
 const keypairPath = (name) => (name ? join(KEYDIR, 'wallets', `${name}.json`) : join(KEYDIR, 'mainnet-launcher.json'));
