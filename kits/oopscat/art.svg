@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000">
+  <defs>
+    <radialGradient id="bg" cx="0.42" cy="0.4" r="0.78">
+      <stop offset="0" stop-color="#FFE68A"/>
+      <stop offset="1" stop-color="#FFB10F"/>
+    </radialGradient>
+    <clipPath id="bodyClip">
+      <path d="M232 834 C205 730 238 646 310 604 L560 604 C640 646 668 730 640 834 Z"/>
+    </clipPath>
+  </defs>
+  <rect width="1000" height="1000" fill="url(#bg)"/>
+
+  <!-- table -->
+  <rect x="-20" y="828" width="815" height="40" fill="#C9803F" stroke="#16182B" stroke-width="12"/>
+  <rect x="-20" y="868" width="815" height="160" fill="#8A4B24" stroke="#16182B" stroke-width="12"/>
+  <path d="M40 930 L300 930 M420 960 L700 960" stroke="#6E3A1B" stroke-width="10" stroke-linecap="round"/>
+
+  <!-- tail -->
+  <path d="M240 810 C120 812 62 740 80 650 C94 585 145 565 168 588 C184 606 158 628 148 660 C132 712 170 752 250 752 Z" fill="#5E6E96" stroke="#16182B" stroke-width="12" stroke-linejoin="round"/>
+
+  <!-- body -->
+  <path d="M232 834 C205 730 238 646 310 604 L560 604 C640 646 668 730 640 834 Z" fill="#5E6E96" stroke="#16182B" stroke-width="12" stroke-linejoin="round"/>
+  <path d="M345 620 C362 700 385 740 425 760 C465 740 488 700 505 620 Z" fill="#E6EAF5"/>
+  <g clip-path="url(#bodyClip)">
+    <path d="M200 600 L700 600 L700 668 C600 690 520 700 425 700 C330 700 260 690 200 676 Z" fill="#3E4B70" opacity="0.45"/>
+  </g>
+
+  <!-- left front leg: contour lines, paw resting on table -->
+  <path d="M302 716 C298 760 298 790 300 812" fill="none" stroke="#16182B" stroke-width="11" stroke-linecap="round"/>
+  <path d="M392 724 C394 764 394 792 392 812" fill="none" stroke="#16182B" stroke-width="11" stroke-linecap="round"/>
+  <path d="M282 836 C278 796 318 790 346 790 C374 790 414 796 410 836 Z" fill="#5E6E96" stroke="#16182B" stroke-width="11" stroke-linejoin="round"/>
+  <path d="M325 834 L327 814 M346 834 L346 810 M367 834 L365 814" stroke="#16182B" stroke-width="7" stroke-linecap="round"/>
+
+  <!-- coffee sloshing out (behind mug rim) -->
+  <path d="M760 640 C762 590 820 552 878 566 C936 580 968 628 970 684 C971 708 950 714 944 694 C936 664 916 650 896 660 C884 668 878 684 874 700 Z" fill="#6F3B1A" stroke="#16182B" stroke-width="11" stroke-linejoin="round"/>
+  <path d="M800 598 C826 578 862 574 892 584" fill="none" stroke="#B0703F" stroke-width="13" stroke-linecap="round"/>
+  <circle cx="962" cy="742" r="15" fill="#6F3B1A" stroke="#16182B" stroke-width="9"/>
+  <circle cx="946" cy="792" r="10" fill="#6F3B1A" stroke="#16182B" stroke-width="7"/>
+  <circle cx="930" cy="536" r="13" fill="#6F3B1A" stroke="#16182B" stroke-width="8"/>
+
+  <!-- mug tipping off the edge -->
+  <g transform="rotate(30 800 830)">
+    <path d="M800 715 C866 712 872 806 800 806" fill="none" stroke="#16182B" stroke-width="42" stroke-linecap="round"/>
+    <path d="M800 715 C866 712 872 806 800 806" fill="none" stroke="#E63946" stroke-width="20" stroke-linecap="round"/>
+    <rect x="668" y="680" width="132" height="150" rx="14" fill="#E63946" stroke="#16182B" stroke-width="12"/>
+    <rect x="686" y="708" width="22" height="100" rx="11" fill="#FF8C95"/>
+  </g>
+
+  <!-- pushing arm with the white guilty paw -->
+  <path d="M530 700 C600 690 650 692 702 690" fill="none" stroke="#16182B" stroke-width="106" stroke-linecap="round"/>
+  <path d="M530 700 C600 690 650 692 702 690" fill="none" stroke="#5E6E96" stroke-width="82" stroke-linecap="round"/>
+  <circle cx="704" cy="690" r="54" fill="#F4F6FB" stroke="#16182B" stroke-width="12"/>
+  <path d="M738 660 L722 672 M746 690 L726 691 M738 720 L722 708" stroke="#16182B" stroke-width="8" stroke-linecap="round"/>
+
+  <!-- head (scaled up) -->
+  <g transform="translate(420 430) scale(1.1) translate(-420 -430)">
+    <g stroke="#16182B" stroke-width="11" stroke-linejoin="round">
+      <path d="M165 320 L195 105 C200 90 215 88 228 98 L345 225 Z" fill="#5E6E96"/>
+      <!-- right ear with notch -->
+      <path d="M675 320 L662 228 L636 214 L657 196 L645 105 C640 90 625 88 612 98 L495 225 Z" fill="#5E6E96"/>
+      <path d="M205 280 L220 150 L300 235 Z" fill="#F29BB0" stroke="none"/>
+      <path d="M635 280 L628 200 L620 150 L540 235 Z" fill="#F29BB0" stroke="none"/>
+      <path d="M420 200 C560 200 660 250 690 360 C700 400 702 425 724 450 C700 458 708 482 734 500 C702 506 700 532 680 550 C640 600 560 625 420 625 C280 625 200 600 160 550 C140 532 138 506 106 500 C132 482 140 458 116 450 C138 425 140 400 150 360 C180 250 280 200 420 200 Z" fill="#5E6E96"/>
+    </g>
+    <!-- head sheen -->
+    <path d="M250 262 C300 232 360 222 420 222" fill="none" stroke="#8193BD" stroke-width="16" stroke-linecap="round"/>
+    <ellipse cx="385" cy="530" rx="56" ry="46" fill="#E6EAF5"/>
+    <ellipse cx="455" cy="530" rx="56" ry="46" fill="#E6EAF5"/>
+
+    <!-- eyes -->
+    <circle cx="308" cy="412" r="82" fill="#D7F542" stroke="#16182B" stroke-width="11"/>
+    <circle cx="532" cy="412" r="82" fill="#D7F542" stroke="#16182B" stroke-width="11"/>
+    <circle cx="308" cy="444" r="42" fill="#16182B"/>
+    <circle cx="532" cy="444" r="42" fill="#16182B"/>
+    <circle cx="323" cy="430" r="11" fill="#FFFFFF"/>
+    <circle cx="547" cy="430" r="11" fill="#FFFFFF"/>
+    <!-- lids: left heavier, right skeptically raised -->
+    <path d="M218 408 L398 408 L398 320 L218 320 Z" fill="#5E6E96"/>
+    <path d="M442 398 L622 386 L622 320 L442 320 Z" fill="#5E6E96"/>
+    <path d="M224 410 L392 406" stroke="#16182B" stroke-width="15" stroke-linecap="round"/>
+    <path d="M446 399 L618 385" stroke="#16182B" stroke-width="15" stroke-linecap="round"/>
+
+    <!-- nose + smirk -->
+    <path d="M399 496 L441 496 L420 521 Z" fill="#F27A9A" stroke="#16182B" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M420 521 L420 538 C408 548 392 548 380 540" fill="none" stroke="#16182B" stroke-width="9" stroke-linecap="round"/>
+    <path d="M420 538 C444 548 470 538 486 512" fill="none" stroke="#16182B" stroke-width="9" stroke-linecap="round"/>
+    <path d="M480 505 L494 514" stroke="#16182B" stroke-width="8" stroke-linecap="round"/>
+
+    <!-- whiskers poke past the cheeks -->
+    <g stroke="#16182B" stroke-width="7" stroke-linecap="round" fill="none">
+      <path d="M330 522 L92 490"/>
+      <path d="M330 545 L96 565"/>
+      <path d="M510 522 L748 490"/>
+      <path d="M510 545 L744 565"/>
+    </g>
+  </g>
+</svg>
