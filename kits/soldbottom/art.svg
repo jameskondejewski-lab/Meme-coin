@@ -21,9 +21,23 @@
       <stop offset="0" stop-color="#6e4029"/>
       <stop offset="1" stop-color="#3f2416"/>
     </linearGradient>
+      <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="11" cy="11" r="3.2" fill="#7c0f14" opacity="0.35"/>
+    </pattern>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0.68" stop-color="#2bff7a" stop-opacity="0"/>
+      <stop offset="1" stop-color="#2bff7a" stop-opacity="0.16"/>
+    </linearGradient>
+    <linearGradient id="glare" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
   </defs>
 
   <rect width="1000" height="1000" fill="url(#bg)"/>
+  <rect width="1000" height="1000" fill="url(#dots)"/>
+  <g transform="translate(500 540) scale(1.04) translate(-500 -500)">
+  <polygon points="275,105 308,193 369,122 370,215 452,169 421,258 513,243 454,315 546,332 465,380 546,428 454,445 513,518 421,502 452,591 370,545 369,638 308,567 275,655 242,567 181,638 180,545 98,591 129,502 37,518 96,445 4,428 85,380 4,332 96,315 37,242 129,258 98,169 180,215 181,122 242,193" fill="#ffc93c" stroke="#7c0f14" stroke-width="8" stroke-linejoin="round" opacity="0.95"/>
   <!-- rage burst behind the ape -->
   <g stroke="#ffd2a1" stroke-width="10" stroke-linecap="round" opacity="0.35">
     <line x1="270" y1="380" x2="40" y2="120"/><line x1="270" y1="380" x2="250" y2="20"/>
@@ -40,6 +54,7 @@
     <line x1="482" y1="285" x2="938" y2="285"/><line x1="482" y1="385" x2="938" y2="385"/><line x1="482" y1="485" x2="938" y2="485"/>
     <line x1="600" y1="182" x2="600" y2="588"/><line x1="720" y1="182" x2="720" y2="588"/><line x1="840" y1="182" x2="840" y2="588"/>
   </g>
+  <path d="M482 182 L 700 182 L 560 588 L 482 588 Z" fill="url(#glare)"/>
   <!-- the chart: dump to the bottom, then send it -->
   <polyline points="500,300 560,375 620,545 680,430 735,470 800,300 852,330 912,222" fill="none" stroke="#2bff7a" stroke-width="34" stroke-linejoin="round" stroke-linecap="round" opacity="0.25"/>
   <polyline points="500,300 560,375 620,545 680,430 735,470 800,300 852,330 912,222" fill="none" stroke="#2bff7a" stroke-width="15" stroke-linejoin="round" stroke-linecap="round"/>
@@ -99,6 +114,7 @@
   <!-- HEAD -->
   <circle cx="105" cy="385" r="58" fill="url(#fur)" stroke="#1a0f09" stroke-width="10"/>
   <circle cx="105" cy="385" r="28" fill="#c98d5c"/>
+  <polygon points="82,310 130,296 118,248 167,251 172,202 218,222 239,178 275,212 311,178 332,222 378,202 383,251 432,248 420,296 468,310" fill="#4a2c1c" stroke="#1a0f09" stroke-width="10" stroke-linejoin="round"/>
   <circle cx="275" cy="380" r="178" fill="url(#fur)" stroke="#1a0f09" stroke-width="12"/>
   <!-- face mask, turned toward the monitor -->
   <path d="M255 285 C 305 250, 410 270, 418 332 C 426 382, 405 402, 410 432 C 426 530, 300 565, 228 522 C 176 490, 168 440, 184 398 C 196 360, 190 308, 255 285 Z" fill="url(#face)" stroke="#1a0f09" stroke-width="8"/>
@@ -133,5 +149,11 @@
   <g fill="#fff" opacity="0.85">
     <circle cx="150" cy="190" r="26"/><circle cx="125" cy="160" r="20"/><circle cx="160" cy="140" r="16"/>
     <circle cx="410" cy="200" r="24"/><circle cx="440" cy="170" r="18"/><circle cx="420" cy="140" r="13"/>
+  </g>
+  <circle cx="275" cy="380" r="172" fill="url(#glow)"/>
+  <g fill="none" stroke="#fff4d6" stroke-width="9" stroke-linecap="round" opacity="0.9">
+    <path d="M60 300 Q 45 330 60 360"/><path d="M35 285 Q 15 330 35 375"/>
+    <path d="M470 300 Q 485 330 470 360"/>
+  </g>
   </g>
 </svg>
