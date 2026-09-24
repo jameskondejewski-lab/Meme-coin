@@ -1,6 +1,17 @@
 # Launch sheet: Won't Budge ($BUDGE), pump.fun
 
-**Status:** preparing. The name/IP check and the logo are in progress. Nothing has been launched.
+**Status:** ready for the owner to launch from their own wallet. Nothing has been launched yet.
+
+- **Name/IP check (2026-09-24, live): minor collisions only.**
+  - No active token anywhere uses the symbol BUDGE or the name "Won't Budge".
+  - Five dead pump.fun tokens (about $2.8K floor, no DEX pairs) share the ticker or a similar name.
+- **Brands the design must stay clear of:**
+  - Hush Puppies (the basset-head crest);
+  - Droopy (white-faced and deadpan);
+  - Fred Basset (upright, comic-strip style);
+  - Budge Studios and Budge Industries (a standalone "Budge" wordmark).
+- **Rules:** never imply any affiliation, and pin the contract address everywhere, because copycats are likely.
+- **Logo:** `assets/budge/budge-draft.png`, draft 1: side-view sleeping tricolour basset on a "DEV BAG" sack. Two other designs are still being judged.
 
 ## The idea
 
@@ -14,11 +25,13 @@ The dev buy is small (0.25 SOL, about 0.9% of supply). The joke is that the dog 
 |---|---|
 | Name | `Won't Budge` |
 | Ticker | `BUDGE` |
-| Image | `assets/budge/budge.png` (1000×1000, original artwork) |
+| Image | `assets/budge/budge-draft.png` (1000×1000 PNG, original artwork; pump.fun needs at least 1000×1000) |
 | Description | see below |
 | X / Telegram / Website | optional. If you create an X account first, add it. A coin with no socials looks abandoned. |
 | Fee mode | **Creator fee** (the default). Not Holder Rewards: paying holders a share of fees looks like a yield product. |
-| Quote asset | SOL (standard; 47 of the 50 newest coins use it) |
+| Pool liquidity pair | SOL (standard; 47 of the 50 newest coins use it) |
+| Share creator rewards | off |
+| Mayhem mode | **OFF**. pump.fun says it "may increase coin supply", which would break the fixed-supply claim. |
 | Initial buy (dev buy) | **0.25 SOL** in the create step. It is the first buy, so no one front-runs it. |
 
 ### Description, version A (if you will lock the dev bag)
@@ -67,7 +80,8 @@ Create the coin yourself at pump.fun with **your own wallet** (Phantom, Solflare
 ## Before you click "Create"
 
 - [ ] Name/ticker/IP check is clear (see the result below).
-- [ ] Logo downloaded from `assets/budge/budge.png`.
+- [ ] Logo downloaded from `assets/budge/budge-draft.png` (or the final version).
+- [ ] Mayhem mode is OFF and creator rewards go to Creator.
 - [ ] Description chosen (A only if you will really lock).
 - [ ] Wallet holds about 0.35 SOL and is on **mainnet**.
 - [ ] Initial buy is set to **0.25 SOL**.

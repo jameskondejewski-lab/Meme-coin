@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000">
+  <defs>
+    <filter id="ds" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="0" flood-color="#2a140a" flood-opacity="0.28"/>
+    </filter>
+    <path id="bodyP" d="M 350 482 C 380 456, 430 452, 475 458 C 560 468, 640 462, 705 448 C 775 432, 845 440, 858 498 C 870 552, 852 600, 812 624 C 782 650, 742 668, 692 660 C 652 682, 602 686, 556 670 C 510 688, 462 686, 420 668 C 372 670, 332 646, 324 602 C 318 560, 326 512, 350 482 Z"/>
+    <path id="headP" d="M 350 452 C 335 400, 262 384, 215 404 C 180 420, 130 440, 95 460 C 60 472, 55 515, 80 528 C 80 570, 100 618, 150 628 C 200 638, 255 640, 305 628 C 355 616, 370 530, 350 452 Z"/>
+    <path id="sackP" d="M 152 616 C 134 566, 202 550, 290 554 C 420 562, 600 544, 718 550 C 806 555, 842 600, 832 654 C 848 726, 832 792, 788 818 C 610 840, 360 840, 180 818 C 128 790, 120 700, 152 616 Z"/>
+    <clipPath id="bodyClip"><use href="#bodyP"/></clipPath>
+    <clipPath id="headClip"><use href="#headP"/></clipPath>
+    <clipPath id="sackClip"><use href="#sackP"/></clipPath>
+  </defs>
+
+  <!-- background -->
+  <rect x="20" y="20" width="960" height="960" rx="210" fill="#FFBF3F"/>
+  
+  <!-- ground shadow -->
+  <ellipse cx="505" cy="832" rx="420" ry="30" fill="#8a4a12" opacity="0.25"/>
+
+  <g stroke="#2A160C" stroke-width="12" stroke-linejoin="round" stroke-linecap="round" filter="url(#ds)">
+
+    <!-- sack top rising behind the dog, neck tied with rope -->
+    <path d="M 470 520 C 480 450, 540 410, 600 398 C 620 380, 634 360, 640 344 C 612 326, 590 296, 594 262 C 614 274, 628 256, 642 240 C 658 258, 676 244, 696 232 C 706 252, 722 258, 744 252 C 742 290, 716 326, 688 350 C 696 368, 706 386, 722 398 C 780 410, 820 450, 826 520 Z" fill="#E3BF80"/>
+    <path d="M 662 344 L 620 274 M 664 342 L 668 254 M 668 344 L 712 268" fill="none" stroke="#9C6B34" stroke-width="6"/>
+    <path d="M 600 400 C 620 420, 640 440, 650 470 M 722 400 C 710 420, 700 440, 696 470" fill="none" stroke="#9C6B34" stroke-width="6"/>
+    <rect x="-46" y="-17" width="92" height="34" rx="14" transform="translate(663 352) rotate(-6)" fill="#B7412C"/>
+
+    <!-- sack body -->
+    <use href="#sackP" fill="#E3BF80"/>
+    <g clip-path="url(#sackClip)" stroke="none">
+      <path d="M 120 768 C 350 798, 650 798, 840 758 L 840 850 L 120 850 Z" fill="#C99B5C"/>
+    </g>
+    <use href="#sackP" fill="none"/>
+    <path d="M 806 668 C 818 726, 808 780, 776 806" fill="none" stroke="#9C6B34" stroke-width="6" stroke-dasharray="16 14"/>
+    <!-- stamp -->
+    <g transform="rotate(-5 615 735)" stroke="none" fill="#6B3316" font-family="'Arial Black', 'DejaVu Sans', sans-serif" font-weight="900" text-anchor="middle">
+      <text x="610" y="728" font-size="68">DEV</text>
+      <text x="610" y="800" font-size="68">BAG</text>
+    </g>
+
+    <!-- limp tail lying over the sack end -->
+    <path d="M 846 462 C 890 462, 926 494, 938 546 C 946 572, 926 584, 912 566 C 898 538, 876 524, 852 522 Z" fill="#CD7A38"/>
+    <path d="M 922 526 C 932 536, 938 546, 940 556 C 944 574, 926 584, 912 566 C 908 559, 904 552, 900 546 C 908 542, 916 536, 922 526 Z" fill="#FFFDF7"/>
+
+    <!-- body -->
+    <use href="#bodyP" fill="#CD7A38"/>
+    <g clip-path="url(#bodyClip)" stroke="none">
+      <!-- black saddle -->
+      <path d="M 430 400 L 880 400 L 880 510 C 830 540, 780 506, 725 530 C 665 556, 600 520, 545 538 C 495 552, 460 530, 440 505 Z" fill="#231510"/>
+      <!-- white chest bib -->
+      <path d="M 300 560 C 340 600, 400 630, 470 640 C 500 660, 490 700, 470 720 L 300 720 Z" fill="#FFFDF7"/>
+    </g>
+    <use href="#bodyP" fill="none"/>
+    <!-- sagging skin folds -->
+    <path d="M 556 670 C 552 650, 556 636, 566 626 M 692 660 C 690 646, 694 634, 702 626" fill="none" stroke-width="7"/>
+    <!-- hind thigh -->
+    <path d="M 716 628 C 690 560, 730 505, 812 512" fill="none" stroke-width="10"/>
+    <!-- hind paw flopped over the sack edge -->
+    <path d="M 730 640 C 728 674, 744 700, 780 702 C 818 704, 838 684, 826 660 C 816 642, 800 636, 790 628 Z" fill="#FFFDF7"/>
+    <path d="M 772 700 L 774 682 M 796 700 L 797 682" fill="none" stroke-width="7"/>
+    <!-- neck skin wrinkles -->
+    <path d="M 376 500 C 364 530, 366 560, 379 586 M 402 508 C 392 532, 394 556, 404 576" fill="none" stroke-width="7"/>
+
+    <!-- front paws under the chin: far paw then near paw -->
+    <path d="M 250 598 C 190 592, 128 590, 94 600 C 64 610, 66 640, 96 644 C 150 650, 210 644, 255 636 Z" fill="#E9DFD0"/>
+    <path d="M 98 642 L 112 626 M 120 645 L 132 628" fill="none" stroke-width="7"/>
+    <path d="M 290 620 C 230 616, 170 620, 140 632 C 108 644, 114 682, 146 684 C 200 688, 255 682, 300 672 Z" fill="#FFFDF7"/>
+    <path d="M 146 684 L 160 664 M 170 686 L 182 666" fill="none" stroke-width="7"/>
+
+    <!-- head -->
+    <use href="#headP" fill="#CD7A38"/>
+    <g clip-path="url(#headClip)" stroke="none">
+      <!-- white blaze + muzzle -->
+      <path d="M 245 370 C 235 410, 200 440, 165 455 C 130 470, 70 470, 30 470 L 30 680 L 200 680 C 170 610, 170 540, 215 490 C 250 460, 270 420, 265 370 Z" fill="#FFFDF7"/>
+    </g>
+    <use href="#headP" fill="none"/>
+    <!-- nose -->
+    <path d="M 64 468 C 84 454, 112 460, 114 484 C 116 506, 94 514, 74 510 C 52 506, 48 480, 64 468 Z" fill="#231510"/>
+    <!-- deep flew line with relaxed corner -->
+    <path d="M 82 530 C 104 546, 132 572, 150 600 C 162 614, 180 614, 190 598" fill="none" stroke-width="8"/>
+    <!-- sleepy closed eye: heavy lid + droopy bag + brow wrinkles -->
+    <path d="M 196 470 C 212 494, 248 496, 266 470" fill="none" stroke-width="11"/>
+    <path d="M 204 510 C 224 522, 252 520, 268 506" fill="none" stroke-width="6"/>
+    <path d="M 226 438 C 243 430, 263 432, 277 442 M 243 420 C 257 415, 271 417, 283 425" fill="none" stroke-width="6"/>
+
+    <!-- long ear draping over the sack and pooling on the ground -->
+    <path d="M 274 470 C 314 452, 360 472, 360 522 C 360 602, 376 692, 424 762 C 454 792, 444 828, 404 828 C 324 834, 224 834, 150 826 C 110 820, 108 788, 145 784 C 200 778, 245 742, 258 682 C 266 622, 252 542, 274 470 Z" fill="#A5532A"/>
+    <path d="M 314 507 C 314 602, 322 702, 358 792 M 250 802 C 290 794, 320 798, 345 810" fill="none" stroke="#6E3417" stroke-width="7"/>
+  </g>
+
+  <!-- Zzz -->
+  <g fill="#2A160C">
+    <path transform="translate(245 290) scale(64)" d="M0 0 H1 V0.26 L0.44 0.74 H1 V1 H0 V0.74 L0.56 0.26 H0 Z"/>
+    <path transform="translate(335 150) scale(100)" d="M0 0 H1 V0.26 L0.44 0.74 H1 V1 H0 V0.74 L0.56 0.26 H0 Z"/>
+  </g>
+</svg>
