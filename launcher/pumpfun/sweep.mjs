@@ -30,12 +30,14 @@ const {
 
 const OWNER = new PublicKey('6gVxrgeFt2iS5UgH4VWX3cCH6mtofJdrMeRDdNhJ1wn5');
 const dryRun = process.argv.includes('--dry-run');
+const walletArg = process.argv.indexOf('--wallet');
+const walletName = walletArg > 0 ? process.argv[walletArg + 1] : null;
 const connection = new Connection(process.env.SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com', {
   commitment: 'confirmed',
   fetch: globalThis.fetch,
 });
 const payer = Keypair.fromSecretKey(
-  Uint8Array.from(JSON.parse(readFileSync(join(homedir(), '.config/solana-launch-intel/mainnet-launcher.json'), 'utf8'))),
+  Uint8Array.from(JSON.parse(readFileSync(join(homedir(), '.config/solana-launch-intel', walletName ? `wallets/${walletName}.json` : 'mainnet-launcher.json'), 'utf8'))),
 );
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 

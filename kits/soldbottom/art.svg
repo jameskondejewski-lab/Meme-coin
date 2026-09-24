@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#16213a"/>
+      <stop offset="1" stop-color="#0c1222"/>
+    </linearGradient>
+  </defs>
+  <rect width="1000" height="1000" fill="url(#bg)"/>
+  <!-- faint grid -->
+  <g stroke="#243252" stroke-width="3">
+    <line x1="0" y1="250" x2="1000" y2="250"/><line x1="0" y1="500" x2="1000" y2="500"/><line x1="0" y1="750" x2="1000" y2="750"/>
+    <line x1="250" y1="0" x2="250" y2="1000"/><line x1="500" y1="0" x2="500" y2="1000"/><line x1="750" y1="0" x2="750" y2="1000"/>
+  </g>
+  <!-- the chart: dips to the bottom, then rips -->
+  <polyline points="40,540 120,600 200,770 300,500 420,540 560,290 680,330 930,70"
+            fill="none" stroke="#27e36b" stroke-width="30" stroke-linejoin="round" stroke-linecap="round"/>
+  <polygon points="965,30 880,60 940,125" fill="#27e36b"/>
+  <!-- the exact bottom: red dot + SOLD tag -->
+  <circle cx="200" cy="770" r="28" fill="#ff3b4e" stroke="#0c1222" stroke-width="8"/>
+  <g transform="translate(60,830) rotate(-8)">
+    <rect x="0" y="0" width="170" height="70" rx="14" fill="#ff3b4e" stroke="#0c1222" stroke-width="8"/>
+    <text x="85" y="50" font-family="Arial Black, Arial, sans-serif" font-size="42" font-weight="900" fill="#fff" text-anchor="middle">SOLD</text>
+  </g>
+  <!-- ape -->
+  <g stroke="#1a120c" stroke-width="12" stroke-linejoin="round">
+    <!-- ears -->
+    <circle cx="370" cy="640" r="70" fill="#6b4226"/>
+    <circle cx="370" cy="640" r="34" fill="#e7b98b" stroke-width="0"/>
+    <circle cx="830" cy="640" r="70" fill="#6b4226"/>
+    <circle cx="830" cy="640" r="34" fill="#e7b98b" stroke-width="0"/>
+    <!-- head -->
+    <ellipse cx="600" cy="640" rx="235" ry="225" fill="#6b4226"/>
+    <!-- face mask -->
+    <path d="M600 520 C 520 470, 420 520, 440 610 C 450 660, 470 690, 470 720 C 470 820, 730 820, 730 720 C 730 690, 750 660, 760 610 C 780 520, 680 470, 600 520 Z" fill="#e7b98b"/>
+    <!-- brow -->
+    <path d="M455 560 Q 520 520 585 560" fill="none" stroke-width="14"/>
+    <path d="M615 560 Q 680 520 745 560" fill="none" stroke-width="14"/>
+    <!-- eyes: wide, looking up-right at the pump -->
+    <ellipse cx="530" cy="615" rx="52" ry="58" fill="#fff"/>
+    <ellipse cx="672" cy="615" rx="52" ry="58" fill="#fff"/>
+    <circle cx="552" cy="592" r="21" fill="#1a120c" stroke-width="0"/>
+    <circle cx="694" cy="592" r="21" fill="#1a120c" stroke-width="0"/>
+    <!-- nostrils + open despair mouth -->
+    <ellipse cx="582" cy="690" rx="10" ry="8" fill="#1a120c" stroke-width="0"/>
+    <ellipse cx="620" cy="690" rx="10" ry="8" fill="#1a120c" stroke-width="0"/>
+    <ellipse cx="601" cy="760" rx="46" ry="38" fill="#3a1410"/>
+    <!-- hand holding phone -->
+    <rect x="690" y="780" width="120" height="190" rx="18" fill="#222a3d"/>
+    <rect x="705" y="800" width="90" height="120" rx="8" fill="#ff3b4e" stroke-width="0"/>
+    <path d="M650 900 C 650 850, 720 840, 740 870 L 760 930 C 760 980, 650 990, 650 940 Z" fill="#6b4226"/>
+  </g>
+  <!-- tears -->
+  <path d="M478 650 C 468 680, 462 700, 478 712 C 494 700, 488 680, 478 650 Z" fill="#5ecbff" stroke="#1a120c" stroke-width="6"/>
+  <path d="M726 650 C 716 680, 710 700, 726 712 C 742 700, 736 680, 726 650 Z" fill="#5ecbff" stroke="#1a120c" stroke-width="6"/>
+  <!-- down arrow on phone screen -->
+  <polygon points="750,900 730,870 742,870 742,828 758,828 758,870 770,870" fill="#fff"/>
+</svg>

@@ -49,7 +49,9 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = resolve(HERE, '../..');
 const OWNER_CREATOR = '6gVxrgeFt2iS5UgH4VWX3cCH6mtofJdrMeRDdNhJ1wn5'; // owner's wallet: receives creator fees
 const MAX_BUY_SOL = 0.3;
-const KEYPAIR = join(homedir(), '.config/solana-launch-intel/mainnet-launcher.json');
+const KEYDIR = join(homedir(), '.config/solana-launch-intel');
+// One wallet per coin: --wallet <name> uses wallets/<name>.json; default is the funding wallet.
+const keypairPath = (name) => (name ? join(KEYDIR, 'wallets', `${name}.json`) : join(KEYDIR, 'mainnet-launcher.json'));
 const RPC = process.env.SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com';
 
 const { values } = parseArgs({
@@ -61,6 +63,7 @@ const { values } = parseArgs({
     standin: { type: 'string' }, // funded pubkey used as fee payer for --dry-run simulation only
     'priority-micro-lamports': { type: 'string', default: '200000' },
     'mint-keypair': { type: 'string' },
+    wallet: { type: 'string' },
   },
 });
 
@@ -99,7 +102,7 @@ try {
 // ---------- chain ----------
 const connection = new Connection(RPC, { commitment: 'confirmed', fetch: globalThis.fetch });
 const online = new OnlinePumpSdk(connection);
-const payer = values['dry-run'] ? null : Keypair.fromSecretKey(Uint8Array.from(JSON.parse(readFileSync(KEYPAIR, 'utf8'))));
+const payer = values['dry-run'] ? null : Keypair.fromSecretKey(Uint8Array.from(JSON.parse(readFileSync(keypairPath(values.wallet), 'utf8'))));
 const feePayer = values['dry-run'] ? new PublicKey(values.standin ?? fail('--dry-run needs --standin <funded pubkey>')) : payer.publicKey;
 const mint = values['mint-keypair']
   ? Keypair.fromSecretKey(Uint8Array.from(JSON.parse(readFileSync(values['mint-keypair'], 'utf8'))))
