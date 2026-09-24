@@ -34,7 +34,7 @@ const {
 } = require('@solana/web3.js');
 const { NATIVE_MINT, TOKEN_2022_PROGRAM_ID } = require('@solana/spl-token');
 const BN = require('bn.js');
-const { OnlinePumpSdk, PUMP_SDK, bondingCurvePda, getBuyTokenAmountFromSolAmount } = require('@pump-fun/pump-sdk');
+const { OnlinePumpSdk, PUMP_SDK, bondingCurvePda, getBuyTokenAmountFromSolAmount, getBuySolAmountFromTokenAmount } = require('@pump-fun/pump-sdk');
 
 // Node's fetch ignores HTTPS_PROXY unless NODE_USE_ENV_PROXY=1: re-exec once.
 if ((process.env.HTTPS_PROXY || process.env.https_proxy) && !process.env.NODE_USE_ENV_PROXY) {
@@ -58,6 +58,7 @@ const { values } = parseArgs({
   options: {
     kit: { type: 'string' },
     'buy-sol': { type: 'string', default: '0' },
+    'buy-tokens': { type: 'string' }, // exact dev buy in whole tokens: 10000000 = 1% of supply
     creator: { type: 'string', default: OWNER_CREATOR },
     'dry-run': { type: 'boolean', default: false },
     standin: { type: 'string' }, // funded pubkey used as fee payer for --dry-run simulation only
@@ -75,7 +76,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const sol = (l) => `${(Number(l) / LAMPORTS_PER_SOL).toFixed(6)} SOL`;
 
 // ---------- kit ----------
-if (!values.kit) fail('Usage: node launch.mjs --kit <kit.json> [--buy-sol 0..0.3] [--dry-run --standin <pubkey>]');
+if (!values.kit) fail('Usage: node launch.mjs --kit <kit.json> [--buy-sol <SOL> | --buy-tokens <whole tokens>] [--dry-run --standin <pubkey>]');
 const kitPath = resolve(values.kit);
 const kit = JSON.parse(readFileSync(kitPath, 'utf8'));
 const errors = [];
@@ -92,6 +93,10 @@ if (errors.length) fail(`Invalid kit ${kitPath}:\n  - ${errors.join('\n  - ')}`)
 const buySol = Number(values['buy-sol']);
 if (!Number.isFinite(buySol) || buySol < 0) fail('--buy-sol must be >= 0');
 if (buySol > MAX_BUY_SOL) fail(`--buy-sol ${buySol} exceeds the owner's cap of ${MAX_BUY_SOL} SOL`);
+const buyTokens = values['buy-tokens'] === undefined ? null : Number(values['buy-tokens']);
+if (buyTokens !== null && !(Number.isSafeInteger(buyTokens) && buyTokens > 0)) fail('--buy-tokens must be a whole number of tokens');
+if (buyTokens !== null && buySol > 0) fail('use --buy-sol or --buy-tokens, not both');
+const buying = buySol > 0 || buyTokens !== null;
 let creator;
 try {
   creator = new PublicKey(values.creator);
@@ -113,7 +118,7 @@ console.log(`Coin:      ${kit.name} ($${kit.symbol})`);
 console.log(`Creator:   ${creator.toBase58()} (receives creator fees)`);
 console.log(`Payer:     ${feePayer.toBase58()}`);
 console.log(`Mint (CA): ${mint.publicKey.toBase58()}`);
-console.log(`Dev buy:   ${buySol} SOL`);
+console.log(`Dev buy:   ${buyTokens !== null ? `exactly ${buyTokens.toLocaleString()} tokens (${(buyTokens / 1e7).toFixed(2)}% of supply)` : `${buySol} SOL`}`);
 
 const balance = await connection.getBalance(feePayer, 'confirmed');
 console.log(`Balance:   ${sol(balance)}`);
@@ -141,15 +146,25 @@ if (!values['dry-run']) {
 // ---------- instructions ----------
 const global = await online.fetchGlobal();
 const ixs = [
-  ComputeBudgetProgram.setComputeUnitLimit({ units: buySol > 0 ? 350_000 : 250_000 }),
+  ComputeBudgetProgram.setComputeUnitLimit({ units: buying ? 350_000 : 250_000 }),
   ComputeBudgetProgram.setComputeUnitPrice({ microLamports: Number(values['priority-micro-lamports']) }),
 ];
 let expectedTokens = null;
-if (buySol > 0) {
+let solAmount = null;
+if (buying) {
   const feeConfig = await online.fetchFeeConfig();
-  const solAmount = new BN(Math.round(buySol * LAMPORTS_PER_SOL));
-  expectedTokens = getBuyTokenAmountFromSolAmount({ global, feeConfig, mintSupply: null, bondingCurve: null, amount: solAmount, quoteMint: NATIVE_MINT });
-  console.log(`Expected:  ~${(expectedTokens.toNumber() / 1e6).toLocaleString()} tokens for ${buySol} SOL`);
+  if (buyTokens !== null) {
+    // Exact-out: the buy takes the token amount plus a max SOL cost (the SDK adds 1% slippage on top).
+    expectedTokens = new BN(buyTokens).mul(new BN(1_000_000));
+    solAmount = getBuySolAmountFromTokenAmount({ global, feeConfig, mintSupply: null, bondingCurve: null, amount: expectedTokens, quoteMint: NATIVE_MINT });
+    const maxCost = Math.ceil(solAmount.toNumber() * 1.01);
+    if (maxCost > MAX_BUY_SOL * LAMPORTS_PER_SOL) fail(`${buyTokens} tokens cost up to ${sol(maxCost)}, over the owner's cap of ${MAX_BUY_SOL} SOL`);
+    console.log(`Cost:      ${sol(solAmount)} for exactly ${buyTokens.toLocaleString()} tokens (max ${sol(maxCost)} with the 1% slippage cap)`);
+  } else {
+    solAmount = new BN(Math.round(buySol * LAMPORTS_PER_SOL));
+    expectedTokens = getBuyTokenAmountFromSolAmount({ global, feeConfig, mintSupply: null, bondingCurve: null, amount: solAmount, quoteMint: NATIVE_MINT });
+    console.log(`Expected:  ~${(expectedTokens.toNumber() / 1e6).toLocaleString()} tokens for ${buySol} SOL`);
+  }
   ixs.push(
     ...(await PUMP_SDK.createV2AndBuyInstructions({
       global,
@@ -233,23 +248,30 @@ if (!status) fail(`Not confirmed after 90s: check ${signature} before re-running
 console.log(`Confirmed: slot ${status.slot}`);
 
 // ---------- verify ----------
+// The coin is live from here on, so a failed check or RPC error exits 3 rather than 1:
+// the caller still sweeps the dev tokens to the owner.
 const checks = [];
 const check = (name, ok, detail = '') => checks.push({ name, ok: Boolean(ok), detail });
-const mintInfo = await connection.getParsedAccountInfo(mint.publicKey, 'confirmed');
-const parsed = mintInfo.value?.data?.parsed?.info;
-check('mint owned by Token-2022', mintInfo.value?.owner?.equals(TOKEN_2022_PROGRAM_ID), mintInfo.value?.owner?.toBase58());
-check('no freeze authority', parsed && !parsed.freezeAuthority, parsed?.freezeAuthority ?? 'none');
-check('supply 1,000,000,000', parsed?.supply === '1000000000000000', parsed?.supply);
-const curveInfo = await connection.getAccountInfo(bondingCurvePda(mint.publicKey), 'confirmed');
-const curve = curveInfo ? PUMP_SDK.decodeBondingCurve(curveInfo) : null;
-check('bonding curve exists', Boolean(curve));
-check('creator = owner wallet', curve?.creator?.equals(creator), curve?.creator?.toBase58());
-check('mayhem mode off', curve && !curve.isMayhemMode);
-check('holder rewards off', curve && !curve.isHolderReward);
-if (buySol > 0) {
-  const bal = await connection.getParsedTokenAccountsByOwner(payer.publicKey, { mint: mint.publicKey }, 'confirmed');
-  const got = bal.value[0]?.account.data.parsed.info.tokenAmount.amount ?? '0';
-  check('dev buy landed', BigInt(got) > 0n, `${Number(got) / 1e6} tokens`);
+try {
+  const mintInfo = await connection.getParsedAccountInfo(mint.publicKey, 'confirmed');
+  const parsed = mintInfo.value?.data?.parsed?.info;
+  check('mint owned by Token-2022', mintInfo.value?.owner?.equals(TOKEN_2022_PROGRAM_ID), mintInfo.value?.owner?.toBase58());
+  check('no freeze authority', parsed && !parsed.freezeAuthority, parsed?.freezeAuthority ?? 'none');
+  check('supply 1,000,000,000', parsed?.supply === '1000000000000000', parsed?.supply);
+  const curveInfo = await connection.getAccountInfo(bondingCurvePda(mint.publicKey), 'confirmed');
+  const curve = curveInfo ? PUMP_SDK.decodeBondingCurve(curveInfo) : null;
+  check('bonding curve exists', Boolean(curve));
+  check('creator = owner wallet', curve?.creator?.equals(creator), curve?.creator?.toBase58());
+  check('mayhem mode off', curve && !curve.isMayhemMode);
+  check('holder rewards off', curve && !curve.isHolderReward);
+  if (buying) {
+    const bal = await connection.getParsedTokenAccountsByOwner(payer.publicKey, { mint: mint.publicKey }, 'confirmed');
+    const got = bal.value[0]?.account.data.parsed.info.tokenAmount.amount ?? '0';
+    if (buyTokens !== null) check(`dev buy = exactly ${buyTokens.toLocaleString()} tokens`, BigInt(got) === BigInt(expectedTokens.toString()), `${Number(got) / 1e6} tokens`);
+    else check('dev buy landed', BigInt(got) > 0n, `${Number(got) / 1e6} tokens`);
+  }
+} catch (e) {
+  check('verification reads', false, e.message);
 }
 const ok = checks.every((c) => c.ok);
 console.log(`\nVerification: ${ok ? 'PASSED' : 'FAILED'}`);
@@ -265,6 +287,8 @@ const record = {
   creator: creator.toBase58(),
   launchWallet: payer.publicKey.toBase58(),
   devBuySol: buySol,
+  devBuyTokens: buyTokens,
+  devBuyQuotedLamports: solAmount?.toString() ?? null,
   signature,
   slot: status.slot,
   checks,
