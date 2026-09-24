@@ -1,0 +1,63 @@
+{
+  "cluster": "mainnet-beta",
+  "venue": "pump.fun",
+  "mint": "5nGXUT3qCmsW5H6wzi6QZrMBsNRebY4goCzvTn7YkHRH",
+  "name": "Sold The Bottom",
+  "symbol": "ISOLD",
+  "metadataUri": "https://ipfs.io/ipfs/bafkreih6bqimn7dn3mrw3qp2wxuab5whdb7ba7cs46x2kocspgewllooom",
+  "creator": "7bS28tHtpKaDNEsEsYHiz1yQhXG6p6SNTcKqRpJDLpnJ",
+  "launchWallet": "BzFYQbKvtbrUw5YzpujZYZYCVEGEcNDEiiAYGyrLjU2D",
+  "devBuySol": 0.335,
+  "devBuyTokens": null,
+  "devBuyQuotedLamports": "335000000",
+  "signature": "3NnvmyiFEEmXTHCh6jEaMMkYDeohH6Zjf8B2KkEuddbooNebRqT42AAgChriRc5HX776G6UyzT6vZSs3w4rafRZB",
+  "slot": 449913759,
+  "checks": [
+    {
+      "name": "mint owned by Token-2022",
+      "ok": true,
+      "detail": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+    },
+    {
+      "name": "no freeze authority",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "supply 1,000,000,000",
+      "ok": true,
+      "detail": "1000000000000000"
+    },
+    {
+      "name": "bonding curve exists",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "creator = owner wallet",
+      "ok": true,
+      "detail": "7bS28tHtpKaDNEsEsYHiz1yQhXG6p6SNTcKqRpJDLpnJ"
+    },
+    {
+      "name": "mayhem mode off",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "holder rewards off",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "dev buy landed",
+      "ok": true,
+      "detail": "11704819.223542 tokens"
+    }
+  ],
+  "links": {
+    "pumpfun": "https://pump.fun/coin/5nGXUT3qCmsW5H6wzi6QZrMBsNRebY4goCzvTn7YkHRH",
+    "solscan": "https://solscan.io/token/5nGXUT3qCmsW5H6wzi6QZrMBsNRebY4goCzvTn7YkHRH",
+    "tx": "https://solscan.io/tx/3NnvmyiFEEmXTHCh6jEaMMkYDeohH6Zjf8B2KkEuddbooNebRqT42AAgChriRc5HX776G6UyzT6vZSs3w4rafRZB"
+  },
+  "launchedAt": "2026-09-24T04:00:06.479Z"
+}

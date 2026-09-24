@@ -236,15 +236,28 @@ if (cost !== null && balance - cost < 0) fail('Payer cannot cover the launch.');
 // ---------- send + confirm ----------
 const signature = await connection.sendRawTransaction(tx.serialize(), { skipPreflight: true, maxRetries: 3 });
 console.log(`Sent:      ${signature}`);
+const recovery = `check https://solscan.io/tx/${signature} before re-running; if the coin exists, run: node sweep.mjs --wallet ${values.wallet ?? '<name>'} --to ${creator.toBase58()} --mint ${mint.publicKey.toBase58()}`;
+const landed = (s) => s && ['confirmed', 'finalized'].includes(s.confirmationStatus);
+const lookUp = async () => (await connection.getSignatureStatuses([signature], { searchTransactionHistory: true })).value[0];
 let status = null;
-for (let i = 0; i < 90; i++) {
-  status = (await connection.getSignatureStatuses([signature])).value[0];
+let seen = false;
+for (let i = 0; i < 90 && !landed(status); i++) {
+  status = await lookUp();
   if (status?.err) fail(`Transaction failed on-chain: ${JSON.stringify(status.err)}`);
-  if (status && ['confirmed', 'finalized'].includes(status.confirmationStatus)) break;
-  if ((await connection.getBlockHeight('confirmed')) > lastValidBlockHeight) fail('Blockhash expired before confirmation: nothing was created. Re-run.');
+  if (landed(status)) break;
+  if (status) seen = true;
+  if (!seen && (await connection.getBlockHeight('confirmed')) > lastValidBlockHeight) {
+    // One last look: it may have landed in the final valid block.
+    await sleep(3000);
+    status = await lookUp();
+    if (status?.err) fail(`Transaction failed on-chain: ${JSON.stringify(status.err)}`);
+    if (!status) fail('Blockhash expired and the transaction was never seen: nothing was created. Re-run.');
+    seen = true;
+    continue;
+  }
   await sleep(1000);
 }
-if (!status) fail(`Not confirmed after 90s: check ${signature} before re-running.`);
+if (!landed(status)) fail(`Not confirmed after 90s: ${recovery}`);
 console.log(`Confirmed: slot ${status.slot}`);
 
 // ---------- verify ----------
