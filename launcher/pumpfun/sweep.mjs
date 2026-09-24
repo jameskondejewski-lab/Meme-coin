@@ -28,7 +28,10 @@ const {
   createCloseAccountInstruction,
 } = require('@solana/spl-token');
 
-const OWNER = new PublicKey('6gVxrgeFt2iS5UgH4VWX3cCH6mtofJdrMeRDdNhJ1wn5');
+// Destination: --to <address> overrides the owner's default wallet.
+const toArg = process.argv.indexOf('--to');
+const OWNER = new PublicKey(toArg > 0 ? process.argv[toArg + 1] : '6gVxrgeFt2iS5UgH4VWX3cCH6mtofJdrMeRDdNhJ1wn5');
+const tokensOnly = process.argv.includes('--tokens-only');
 const dryRun = process.argv.includes('--dry-run');
 const walletArg = process.argv.indexOf('--wallet');
 const walletName = walletArg > 0 ? process.argv[walletArg + 1] : null;
@@ -77,7 +80,8 @@ for (const programId of [TOKEN_PROGRAM_ID, TOKEN_2022_PROGRAM_ID]) {
   }
 }
 
-// 2. Remaining SOL.
+// 2. Remaining SOL (skipped with --tokens-only).
+if (tokensOnly) process.exit(0);
 const balance = await connection.getBalance(payer.publicKey, 'confirmed');
 const amount = balance - 5000; // one signature fee
 console.log(`SOL: ${balance / LAMPORTS_PER_SOL}`);
